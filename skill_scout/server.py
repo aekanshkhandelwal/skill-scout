@@ -3,12 +3,17 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
-from fastapi import FastAPI, Query, Request
+from fastapi import BackgroundTasks, FastAPI, Query, Request
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-from skill_scout.db import get_item, init_db, query_items
+from skill_scout.collectors.antigravity_directory import collect_antigravity_mcp_directory
+from skill_scout.collectors.github_skills import collect_github_skill_repos
+from skill_scout.collectors.mcp_registry import collect_mcp_registry
+from skill_scout.collectors.npm_registry import collect_npm_mcp
+from skill_scout.db import get_item, init_db, query_items, upsert_many
+from skill_scout.rank import compute_scores
 from skill_scout.agent import ask
 from skill_scout.install import install_hints
 
@@ -25,6 +30,48 @@ def create_app(db_path: str) -> FastAPI:
     @app.on_event("startup")
     async def _startup() -> None:
         await init_db(db_path)
+
+    async def _refresh_index() -> dict:
+        async def _try(label: str, fn):
+            try:
+                return await fn()
+            except Exception as e:
+                return {"label": label, "error": str(e), "count": 0, "items": []}
+
+        results = []
+
+        r1 = await _try("mcp_registry", collect_mcp_registry)
+        if isinstance(r1, list):
+            results.append({"label": "mcp_registry", "count": len(r1), "error": None})
+            items = r1
+        else:
+            results.append(r1)
+            items = []
+
+        r2 = await _try("antigravity_directory", collect_antigravity_mcp_directory)
+        if isinstance(r2, list):
+            results.append({"label": "antigravity_directory", "count": len(r2), "error": None})
+            items.extend(r2)
+        else:
+            results.append(r2)
+
+        r3 = await _try("github", collect_github_skill_repos)
+        if isinstance(r3, list):
+            results.append({"label": "github", "count": len(r3), "error": None})
+            items.extend(r3)
+        else:
+            results.append(r3)
+
+        r4 = await _try("npm", collect_npm_mcp)
+        if isinstance(r4, list):
+            results.append({"label": "npm", "count": len(r4), "error": None})
+            items.extend(r4)
+        else:
+            results.append(r4)
+
+        scored = compute_scores(items)
+        await upsert_many(db_path, scored)
+        return {"ok": True, "total_indexed": len(scored), "collectors": results}
 
     @app.get("/", response_class=HTMLResponse)
     async def home(request: Request) -> HTMLResponse:
@@ -80,5 +127,12 @@ def create_app(db_path: str) -> FastAPI:
     @app.get("/healthz", response_class=JSONResponse)
     async def healthz() -> JSONResponse:
         return JSONResponse({"ok": True, "db": os.path.abspath(db_path)})
+
+    @app.post("/api/refresh", response_class=JSONResponse)
+    async def api_refresh(bg: BackgroundTasks) -> JSONResponse:
+        # For serverless: do it inline so results are immediately available.
+        # For long-running environments: could be switched to background.
+        data = await _refresh_index()
+        return JSONResponse(data)
 
     return app

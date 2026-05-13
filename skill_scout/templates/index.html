@@ -104,7 +104,11 @@
         const res = await fetch(`/api/items?${params.toString()}`);
         const data = await res.json();
         const items = data.items || [];
-        document.getElementById("status").textContent = `Found ${items.length} results`;
+        if (items.length === 0) {
+          document.getElementById("status").textContent = `Found 0 results (index may be empty). Click Ask or refresh the index.`;
+        } else {
+          document.getElementById("status").textContent = `Found ${items.length} results`;
+        }
         document.getElementById("results").innerHTML = items.map(card).join("");
       }
 
