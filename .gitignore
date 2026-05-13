@@ -1,0 +1,16 @@
+.env
+*.db
+*.sqlite
+*.sqlite3
+skill_scout_export.json
+
+__pycache__/
+*.pyc
+.pytest_cache/
+
+.venv/
+venv/
+
+.DS_Store
+Thumbs.db
+

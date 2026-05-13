@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skill Scout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-zinc-950 text-zinc-100">
+    <div class="max-w-5xl mx-auto p-6">
+      <header class="mb-6">
+        <h1 class="text-2xl font-semibold">Skill Scout</h1>
+        <p class="text-zinc-400 mt-1">Discover trending Codex skills, MCP servers, and related plugins/connectors/APIs.</p>
+      </header>
+
+      <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 mb-6">
+        <div class="flex gap-3 flex-col sm:flex-row">
+          <input id="q" class="flex-1 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 outline-none focus:border-zinc-600"
+                 placeholder="Search (e.g., 'playwright', 'slack connector', 'vector db mcp')"
+                 value="{{ default_query }}" />
+          <button id="searchBtn" class="bg-indigo-600 hover:bg-indigo-500 rounded-lg px-4 py-2 font-medium">Search</button>
+          <button id="askBtn" class="bg-zinc-800 hover:bg-zinc-700 rounded-lg px-4 py-2 font-medium">Ask</button>
+        </div>
+        <div class="mt-3 flex flex-wrap gap-3 text-sm text-zinc-300">
+          {% for t in default_types %}
+          <label class="flex items-center gap-2">
+            <input type="checkbox" class="accent-indigo-500" name="type" value="{{ t }}" checked />
+            <span>{{ t }}</span>
+          </label>
+          {% endfor %}
+        </div>
+        <div class="mt-3 text-xs text-zinc-500">
+          Tip: run <code class="text-zinc-200">python -m skill_scout.cli refresh</code> to update the index.
+        </div>
+      </div>
+
+      <div id="status" class="text-sm text-zinc-400 mb-3"></div>
+      <div id="agent" class="hidden bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 mb-4"></div>
+      <div id="results" class="grid grid-cols-1 gap-4"></div>
+    </div>
+
+    <script>
+      function selectedTypes() {
+        return Array.from(document.querySelectorAll('input[name="type"]:checked')).map(el => el.value);
+      }
+
+      function esc(s) {
+        return (s || "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+      }
+
+      function card(item) {
+        const tags = (item.tags || []).slice(0, 8).map(t =>
+          `<span class="px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-200 text-xs">${esc(t)}</span>`
+        ).join("");
+
+        const meta = [];
+        if (item.stars != null) meta.push(`★ ${item.stars}`);
+        if (item.forks != null) meta.push(`⑂ ${item.forks}`);
+        if (item.mcp_version) meta.push(`v ${esc(item.mcp_version)}`);
+        if (item.mcp_status) meta.push(`${esc(item.mcp_status)}`);
+
+        return `
+          <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4">
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="text-xs text-zinc-500">${esc(item.type)} · ${esc(item.source)}</div>
+                <a class="text-lg font-semibold hover:underline" href="${esc(item.url)}" target="_blank" rel="noreferrer">${esc(item.title)}</a>
+              </div>
+              <div class="text-xs text-zinc-400 text-right whitespace-nowrap">${meta.join(" · ")}</div>
+            </div>
+            <p class="text-sm text-zinc-300 mt-2">${esc(item.description || "")}</p>
+            <div class="mt-3 flex flex-wrap gap-2">${tags}</div>
+            <div class="mt-3 flex items-center justify-between gap-3">
+              <div class="text-xs text-zinc-500">Score: ${Number(item.score || 0).toFixed(2)}</div>
+              <button class="text-xs text-indigo-300 hover:underline" onclick="showInstall('${esc(item.id)}')">Install hints</button>
+            </div>
+          </div>
+        `;
+      }
+
+      async function showInstall(id) {
+        const agentBox = document.getElementById("agent");
+        agentBox.classList.remove("hidden");
+        agentBox.innerHTML = `<div class="text-sm text-zinc-400">Loading install hints…</div>`;
+        const res = await fetch(`/api/items/${encodeURIComponent(id)}/install`);
+        const data = await res.json();
+        const hints = (data.hints || []).map(h => `<li class="mt-1"><code class="text-zinc-200">${esc(h)}</code></li>`).join("");
+        agentBox.innerHTML = `
+          <div class="text-sm font-semibold">Install hints</div>
+          <ul class="text-sm mt-2">${hints || "<li class='text-zinc-400'>No hints.</li>"}</ul>
+        `;
+      }
+
+      async function runSearch() {
+        const q = document.getElementById("q").value.trim();
+        const types = selectedTypes();
+        const params = new URLSearchParams();
+        if (q) params.set("q", q);
+        for (const t of types) params.append("types", t);
+        params.set("limit", "50");
+        params.set("offset", "0");
+
+        document.getElementById("status").textContent = "Searching…";
+        const res = await fetch(`/api/items?${params.toString()}`);
+        const data = await res.json();
+        const items = data.items || [];
+        document.getElementById("status").textContent = `Found ${items.length} results`;
+        document.getElementById("results").innerHTML = items.map(card).join("");
+      }
+
+      document.getElementById("searchBtn").addEventListener("click", runSearch);
+      document.getElementById("askBtn").addEventListener("click", async () => {
+        const q = document.getElementById("q").value.trim();
+        const types = selectedTypes();
+        if (!q) return;
+
+        const agentBox = document.getElementById("agent");
+        agentBox.classList.remove("hidden");
+        agentBox.innerHTML = `<div class="text-sm text-zinc-400">Thinking…</div>`;
+
+        const res = await fetch("/api/ask", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify({prompt: q, types, k: 10}),
+        });
+        const data = await res.json();
+
+        const rec = (data.recommended || []).map(r => `<li class="mt-1"><code class="text-zinc-200">${esc(r.id)}</code> — <span class="text-zinc-300">${esc(r.why || "")}</span></li>`).join("");
+        agentBox.innerHTML = `
+          <div class="text-sm font-semibold">Agent picks</div>
+          <ul class="text-sm mt-2">${rec || "<li class='text-zinc-400'>No recommendations.</li>"}</ul>
+          <div class="text-xs text-zinc-500 mt-3">${esc(data.notes || "")}</div>
+        `;
+      });
+      document.getElementById("q").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") runSearch();
+      });
+
+      runSearch();
+    </script>
+  </body>
+</html>
