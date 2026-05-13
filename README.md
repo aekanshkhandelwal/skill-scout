@@ -13,6 +13,12 @@ Local agent + web UI that discovers, ranks, and searches:
 - **UI**: search + filters + install hints
 - **Ask**: optional model-based rerank (supports OpenAI-compatible gateways like NVIDIA, OpenAI, or local Ollama)
 
+## Visual overview
+
+![Skill Scout workflow](docs/workflow.png)
+
+![Skill Scout flowchart](docs/flowchart.png)
+
 ## Quick start (Windows PowerShell)
 
 1) Create a venv and install deps:
@@ -58,4 +64,3 @@ Set:
 - `python -m skill_scout.cli refresh`
 - `python -m skill_scout.cli serve`
 - `python -m skill_scout.cli export --out skill_scout_export.json`
-
