@@ -22,12 +22,17 @@ def _safe_dt(value: str | None) -> datetime | None:
         return None
 
 
-async def collect_npm_mcp(limit_total: int = 200) -> list[DiscoveredItem]:
+async def collect_npm_mcp(limit_total: int = 500) -> list[DiscoveredItem]:
     # Heuristics: surface likely MCP servers and related tooling.
     queries = [
         "mcp server",
         "model context protocol",
         "mcp-server",
+        "codex skill",
+        "agentskills",
+        "claude-code",
+        "anthropic mcp",
+        "openai mcp",
     ]
 
     items: dict[str, DiscoveredItem] = {}

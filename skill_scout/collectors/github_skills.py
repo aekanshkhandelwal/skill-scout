@@ -104,7 +104,7 @@ async def _code_search_skill_md(per_page: int = 30) -> list[dict[str, Any]]:
         return data.get("items") or []
 
 
-async def collect_github_skill_repos(limit_total: int = 200) -> list[DiscoveredItem]:
+async def collect_github_skill_repos(limit_total: int = 500) -> list[DiscoveredItem]:
     repos: list[dict[str, Any]] = []
 
     # 1) Strong known source: openai/skills (curated + experimental)

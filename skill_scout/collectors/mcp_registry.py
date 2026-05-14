@@ -22,7 +22,7 @@ def _safe_dt(value: str | None) -> datetime | None:
         return None
 
 
-async def collect_mcp_registry(limit_total: int = 500) -> list[DiscoveredItem]:
+async def collect_mcp_registry(limit_total: int = 1000) -> list[DiscoveredItem]:
     items: list[DiscoveredItem] = []
 
     async with build_http_client() as client:
