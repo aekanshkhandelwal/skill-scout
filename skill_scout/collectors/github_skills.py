@@ -108,6 +108,12 @@ async def collect_github_skill_repos(limit_total: int = 200) -> list[DiscoveredI
     repos.extend(await _search_repos("topic:mcp", per_page=50))
     repos.extend(await _search_repos('SKILL.md in:readme', per_page=50))
 
+    # 2b) Ecosystem keywords beyond Codex (Claude Code / OpenCode / OpenClaw / Antigravity)
+    repos.extend(await _search_repos('"claude code" SKILL.md in:readme', per_page=50))
+    repos.extend(await _search_repos('"opencode" SKILL.md in:readme', per_page=50))
+    repos.extend(await _search_repos('"openclaw" SKILL.md in:readme', per_page=50))
+    repos.extend(await _search_repos('"antigravity" SKILL.md in:readme', per_page=50))
+
     # 3) Code search for filename:SKILL.md (token recommended)
     code_hits = await _code_search_skill_md(per_page=50)
     for hit in code_hits:

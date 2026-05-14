@@ -1,0 +1,100 @@
+:root{
+  color-scheme: dark;
+  --bg: #09090b;
+  --panel: rgba(24,24,27,.58);
+  --panel2: rgba(9,9,11,.45);
+  --stroke: rgba(63,63,70,.82);
+  --stroke2: rgba(63,63,70,.55);
+  --text: #fafafa;
+  --muted: #a1a1aa;
+  --muted2: #71717a;
+  --indigo: #6366f1;
+  --cyan: #22d3ee;
+  --emerald: #34d399;
+}
+
+.glass{background:var(--panel);backdrop-filter:blur(12px)}
+.glass2{background:var(--panel2);backdrop-filter:blur(12px)}
+.ring-soft{box-shadow:0 0 0 1px var(--stroke) inset}
+.ring-soft2{box-shadow:0 0 0 1px var(--stroke2) inset}
+.shadow-soft{box-shadow:0 22px 90px rgba(0,0,0,.55)}
+.shadow-soft2{box-shadow:0 16px 60px rgba(0,0,0,.45)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:1rem;padding:.8rem 1.1rem;font-weight:600;letter-spacing:.01em;transition:transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:rgba(99,102,241,.95)}
+.btn-primary:hover{background:rgba(99,102,241,1)}
+.btn-secondary{background:rgba(39,39,42,.85);border:1px solid rgba(63,63,70,.9)}
+.btn-secondary:hover{background:rgba(39,39,42,1);border-color:rgba(82,82,91,1)}
+.btn-ghost{background:transparent;border:1px solid rgba(63,63,70,.85)}
+.btn-ghost:hover{background:rgba(24,24,27,.55);border-color:rgba(82,82,91,1)}
+
+.chip{display:inline-flex;align-items:center;gap:.5rem;border-radius:999px;padding:.35rem .7rem;border:1px solid rgba(63,63,70,.7);background:rgba(9,9,11,.35);color:var(--muted);font-size:.75rem}
+.dot{width:.45rem;height:.45rem;border-radius:999px;background:var(--emerald)}
+
+.kpi{border-radius:1.25rem;padding:1rem;border:1px solid rgba(63,63,70,.65);background:rgba(9,9,11,.35)}
+.kpi .label{color:var(--muted2);font-size:.75rem}
+.kpi .value{font-weight:700;font-size:1.2rem;margin-top:.15rem}
+
+.h2{font-size:1.55rem;font-weight:700;letter-spacing:-.01em}
+.h3{font-size:1.05rem;font-weight:700}
+.muted{color:var(--muted)}
+.muted2{color:var(--muted2)}
+
+.fade-in{animation:fadeIn .35s ease-out both}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.reveal{
+  opacity:0;
+  transform:translateY(18px);
+  transition:
+    opacity .75s cubic-bezier(.2,.8,.2,1),
+    transform .75s cubic-bezier(.2,.8,.2,1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+.floaty{transition:transform .22s cubic-bezier(.2,.8,.2,1), box-shadow .22s cubic-bezier(.2,.8,.2,1), border-color .22s ease}
+.floaty:hover{transform:translateY(-3px);box-shadow:0 26px 86px rgba(0,0,0,.52)}
+
+.pulse-ring{
+  box-shadow: 0 0 0 0 rgba(99,102,241,.35);
+  animation: pulseRing 2.2s ease-in-out infinite;
+}
+@keyframes pulseRing{
+  0%,100%{box-shadow:0 0 0 0 rgba(99,102,241,.28)}
+  50%{box-shadow:0 0 0 10px rgba(99,102,241,0)}
+}
+
+.shine{
+  position:relative;
+  overflow:hidden;
+}
+.shine:before{
+  content:"";
+  position:absolute;
+  inset:-80% -40%;
+  background:linear-gradient(120deg, transparent, rgba(255,255,255,.10), transparent);
+  transform:translateX(-40%);
+  opacity:.0;
+  transition:opacity .25s ease;
+}
+.shine:hover:before{opacity:.9;animation:shineMove 1.15s ease}
+@keyframes shineMove{from{transform:translateX(-55%)}to{transform:translateX(55%)}}
+
+.grad-stroke{
+  box-shadow:
+    0 0 0 1px rgba(63,63,70,.75) inset,
+    0 0 0 1px rgba(99,102,241,.20);
+}
+
+.gridbg{
+  background-image:radial-gradient(circle at 1px 1px, rgba(63,63,70,.55) 1px, transparent 0);
+  background-size:28px 28px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  .reveal{transition:none;opacity:1;transform:none}
+  .floaty{transition:none}
+  .shine:before{animation:none}
+  .btn{transition:none}
+}

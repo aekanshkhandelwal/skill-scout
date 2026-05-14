@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Skill Scout</title>
+    <meta name="description" content="Discover trending Codex skills, MCP servers, and developer tooling — with search, filters, and install hints." />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/site.css" />
+    <style>html{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}</style>
+  </head>
+  <body class="min-h-screen bg-zinc-950 text-zinc-100">
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute inset-0 gridbg opacity-[0.09]"></div>
+      <div class="absolute -top-52 left-1/2 -translate-x-1/2 h-[680px] w-[1080px] rounded-full blur-3xl opacity-35"
+           style="background: radial-gradient(circle at 50% 50%, rgba(99,102,241,.60), rgba(34,211,238,.22), rgba(0,0,0,0));"></div>
+      <div class="absolute -bottom-56 right-[-180px] h-[640px] w-[640px] rounded-full blur-3xl opacity-25"
+           style="background: radial-gradient(circle at 50% 50%, rgba(34,211,238,.50), rgba(99,102,241,.18), rgba(0,0,0,0));"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-5 sm:px-6 py-10">
+      <header class="flex items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <div class="h-10 w-10 rounded-2xl glass ring-soft flex items-center justify-center">
+            <div class="h-5 w-5 rounded-lg" style="background: linear-gradient(135deg, rgba(99,102,241,1), rgba(34,211,238,1));"></div>
+          </div>
+          <div>
+            <div class="text-sm text-zinc-200 leading-none font-semibold tracking-tight">Skill Scout</div>
+            <div class="text-xs text-zinc-500 mt-1 leading-none">Codex skills • MCP servers • plugins/connectors</div>
+          </div>
+        </div>
+        <nav class="flex items-center gap-2 text-sm">
+          <a class="btn btn-ghost py-2 px-3 rounded-xl" href="#how">How it works</a>
+          <a class="btn btn-secondary py-2 px-3 rounded-xl" href="/app">Open app</a>
+          <a class="text-zinc-500 hover:text-zinc-300 underline-offset-4 hover:underline px-2"
+             href="https://github.com/aekanshkhandelwal/skill-scout" target="_blank" rel="noreferrer">GitHub</a>
+        </nav>
+      </header>
+
+      <main class="mt-10">
+        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <div class="lg:col-span-6 fade-in reveal is-visible">
+            <div class="glass grad-stroke shadow-soft rounded-3xl p-6 sm:p-8 h-full shine">
+              <div class="chip">
+                <span class="dot"></span>
+                Trending discovery for your tooling stack
+              </div>
+
+              <h1 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-[1.05]">
+                Find what to install next.
+              </h1>
+              <p class="mt-4 text-zinc-300 leading-relaxed text-[15px]">
+                Skill Scout scans multiple ecosystems and ranks items by popularity and recent activity.
+                Search and filter, or ask for a best-of list when you’re exploring a new stack.
+              </p>
+
+              <div class="mt-6 flex flex-col sm:flex-row gap-3">
+                <a href="/app" class="btn btn-primary w-full sm:w-auto pulse-ring">Launch app</a>
+                <a href="#how" class="btn btn-secondary w-full sm:w-auto">How it works</a>
+              </div>
+
+              <div class="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-3">
+                <div class="kpi floaty">
+                  <div class="label">Sources</div>
+                  <div class="value">4+</div>
+                </div>
+                <div class="kpi floaty">
+                  <div class="label">Search types</div>
+                  <div class="value">7</div>
+                </div>
+                <div class="kpi floaty">
+                  <div class="label">Install hints</div>
+                  <div class="value">Built-in</div>
+                </div>
+              </div>
+
+              <div class="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
+                <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+                  <div class="h3">Search + filters</div>
+                  <div class="muted mt-1">Find skills, MCP servers, plugins, connectors, APIs, and hooks.</div>
+                </div>
+                <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+                  <div class="h3">Ask (optional)</div>
+                  <div class="muted mt-1">Enable model reranking via NVIDIA/OpenAI/Ollama for smarter picks.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-6 fade-in reveal is-visible">
+            <div class="glass grad-stroke shadow-soft rounded-3xl overflow-hidden h-full shine">
+              <div class="p-5 sm:p-6 border-b border-zinc-800/70 flex items-start justify-between gap-3">
+                <div>
+                  <div class="text-sm text-zinc-200 font-semibold">Workflow overview</div>
+                  <div class="text-xs text-zinc-500 mt-1">Same diagram as the README.</div>
+                </div>
+                <a href="/app" class="text-xs text-indigo-300 hover:underline underline-offset-4">Open app →</a>
+              </div>
+              <div class="p-4 sm:p-6">
+                <img src="/static/workflow.png" alt="Skill Scout workflow" class="w-full rounded-2xl border border-zinc-800/70" />
+                <details class="mt-4">
+                  <summary class="cursor-pointer text-sm text-zinc-300 hover:text-white">See simple flowchart</summary>
+                  <div class="mt-3">
+                    <img src="/static/flowchart.png" alt="Skill Scout flowchart" class="w-full rounded-2xl border border-zinc-800/70" />
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section id="how" class="mt-10 glass grad-stroke shadow-soft rounded-3xl p-6 sm:p-8 reveal">
+          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
+            <div>
+              <div class="h2">How it works</div>
+              <div class="muted mt-2 max-w-2xl text-sm">
+                Collect → clean → score → index → search/ask. Refresh whenever you want the latest trends.
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <a class="btn btn-ghost py-2.5 px-4 rounded-2xl" href="/app">Open app</a>
+              <a class="btn btn-secondary py-2.5 px-4 rounded-2xl" href="https://github.com/aekanshkhandelwal/skill-scout" target="_blank" rel="noreferrer">Readme</a>
+            </div>
+          </div>
+
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+              <div class="h3">Collect</div>
+              <div class="muted mt-1">MCP Registry, GitHub SKILL.md ecosystem, NPM search, directory listings.</div>
+            </div>
+            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+              <div class="h3">Score</div>
+              <div class="muted mt-1">Popularity (stars/forks) + recency (last update) + type weighting.</div>
+            </div>
+            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+              <div class="h3">Use</div>
+              <div class="muted mt-1">Search and filter, ask for top picks, then follow install hints.</div>
+            </div>
+          </div>
+
+          <div class="mt-7 grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div class="glass2 ring-soft2 rounded-2xl p-4 sm:p-5 floaty">
+              <div class="text-sm font-semibold text-zinc-200">Detailed workflow diagram</div>
+              <div class="text-xs text-zinc-500 mt-1">A step-by-step view of the pipeline (collect → normalize → dedupe → score → serve).</div>
+              <img src="/static/workflow_detailed.png" alt="Skill Scout workflow detailed" class="mt-4 w-full rounded-2xl border border-zinc-800/70" />
+            </div>
+            <div class="glass2 ring-soft2 rounded-2xl p-4 sm:p-5 floaty">
+              <div class="text-sm font-semibold text-zinc-200">What you actually do</div>
+              <ol class="mt-3 space-y-2 text-sm text-zinc-300 list-decimal list-inside">
+                <li>Click <span class="text-zinc-200 font-semibold">Refresh</span> to build/update the index.</li>
+                <li>Search and filter by type (skill, mcp_server, plugin, connector, api, hook).</li>
+                <li>Use <span class="text-zinc-200 font-semibold">Ask</span> for short recommended lists.</li>
+                <li>Open results and use <span class="text-zinc-200 font-semibold">Install hints</span>.</li>
+              </ol>
+              <div class="mt-4 text-xs text-zinc-500">
+                On serverless (Vercel), storage may reset on cold starts — run Refresh again to repopulate results.
+              </div>
+              <img src="/static/ui_mock.png" alt="Skill Scout app UI mock" class="mt-4 w-full rounded-2xl border border-zinc-800/70" />
+            </div>
+          </div>
+        </section>
+
+        <section class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+          <div class="lg:col-span-7 glass grad-stroke shadow-soft rounded-3xl p-6 sm:p-8 reveal">
+            <div class="h2">LLM providers (optional)</div>
+            <div class="muted mt-2 text-sm max-w-2xl">
+              “Ask” works without a model (local ranking), but you’ll get better results when you connect a provider.
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
+              <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+                <div class="h3">NVIDIA</div>
+                <div class="muted mt-1">OpenAI-compatible gateway. Set <code class="text-zinc-200">OPENAI_BASE_URL</code> + <code class="text-zinc-200">OPENAI_MODEL</code>.</div>
+              </div>
+              <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+                <div class="h3">OpenAI</div>
+                <div class="muted mt-1">Use default API. Set <code class="text-zinc-200">OPENAI_API_KEY</code>.</div>
+              </div>
+              <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+                <div class="h3">Ollama</div>
+                <div class="muted mt-1">Local models. Set <code class="text-zinc-200">OLLAMA_HOST</code> + <code class="text-zinc-200">OLLAMA_MODEL</code>.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 glass grad-stroke shadow-soft rounded-3xl p-6 sm:p-8 reveal">
+            <div class="h2">Deploy</div>
+            <div class="muted mt-2 text-sm">
+              Works locally and on serverless hosts. For best reliability, use a hosted DB later.
+            </div>
+            <div class="mt-5 space-y-3 text-sm">
+              <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+                <div class="h3">Vercel</div>
+                <div class="muted mt-1">On cold starts, call <code class="text-zinc-200">/api/refresh</code> (or use the in-app Refresh button).</div>
+              </div>
+              <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+                <div class="h3">Render / Fly</div>
+                <div class="muted mt-1">Easier persistence. Keep SQLite on disk or switch to Postgres.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="mt-6 glass grad-stroke shadow-soft rounded-3xl p-6 sm:p-8 reveal">
+          <div class="h2">FAQ</div>
+          <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+              <div class="h3">Why do I sometimes see 0 results?</div>
+              <div class="muted mt-1">On serverless, storage resets. Click <span class="text-zinc-200 font-medium">Refresh</span> to rebuild the index.</div>
+            </div>
+            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+              <div class="h3">Does it install things automatically?</div>
+              <div class="muted mt-1">No—Skill Scout shows install hints and links. You stay in control.</div>
+            </div>
+            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+              <div class="h3">Is the Antigravity directory verified?</div>
+              <div class="muted mt-1">It’s treated as discovery only. Validate before installing.</div>
+            </div>
+            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
+              <div class="h3">How do I keep API keys safe?</div>
+              <div class="muted mt-1">Use environment variables (Vercel settings or local <code class="text-zinc-200">.env</code>). Never commit secrets.</div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+      <footer class="mt-10 glass ring-soft shadow-soft2 rounded-3xl p-5 sm:p-6 text-xs text-zinc-500 reveal">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+          <div class="muted">Built for fast discovery. Store is local by default.</div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="chip">Local: <code class="text-zinc-200">python -m skill_scout.cli refresh</code></span>
+            <span class="chip">Run: <code class="text-zinc-200">python -m skill_scout.cli serve</code></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      (function () {
+        // Smooth anchor scrolling
+        document.querySelectorAll('a[href^=\"#\"]').forEach(a => {
+          a.addEventListener('click', (e) => {
+            const id = a.getAttribute('href').slice(1);
+            const el = document.getElementById(id);
+            if (!el) return;
+            e.preventDefault();
+            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            history.replaceState(null, '', '#' + id);
+          });
+        });
+
+        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReduced) return;
+
+        const els = Array.from(document.querySelectorAll('.reveal'));
+        const io = new IntersectionObserver((entries) => {
+          for (const ent of entries) {
+            if (ent.isIntersecting) {
+              ent.target.classList.add('is-visible');
+              io.unobserve(ent.target);
+            }
+          }
+        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+        els.forEach((el, idx) => {
+          // Subtle stagger
+          el.style.transitionDelay = `${Math.min(idx * 60, 240)}ms`;
+          io.observe(el);
+        });
+      })();
+    </script>
+  </body>
+</html>

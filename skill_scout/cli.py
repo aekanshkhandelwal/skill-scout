@@ -13,6 +13,8 @@ from skill_scout.collectors.github_skills import collect_github_skill_repos
 from skill_scout.collectors.mcp_registry import collect_mcp_registry
 from skill_scout.collectors.npm_registry import collect_npm_mcp
 from skill_scout.collectors.antigravity_directory import collect_antigravity_mcp_directory
+from skill_scout.collectors.agentskills_directory import collect_agentskills_directory
+from skill_scout.collectors.claudskills_directory import collect_claudskills_directory
 from skill_scout.db import export_all, init_db, upsert_many
 from skill_scout.rank import compute_scores
 from skill_scout.server import create_app
@@ -35,6 +37,8 @@ async def _refresh() -> None:
     items.extend(await _try("antigravity_directory", collect_antigravity_mcp_directory))
     items.extend(await _try("github", collect_github_skill_repos))
     items.extend(await _try("npm", collect_npm_mcp))
+    items.extend(await _try("agentskills_directory", collect_agentskills_directory))
+    items.extend(await _try("claudskills_directory", collect_claudskills_directory))
 
     scored = compute_scores(items)
     await upsert_many(db_path, scored)

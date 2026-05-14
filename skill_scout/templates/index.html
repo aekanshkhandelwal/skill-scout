@@ -4,38 +4,98 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Skill Scout</title>
+    <meta name="description" content="Search and discover trending Codex skills, MCP servers, and developer tooling." />
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/site.css" />
+    <style>html{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}</style>
   </head>
-  <body class="bg-zinc-950 text-zinc-100">
-    <div class="max-w-5xl mx-auto p-6">
-      <header class="mb-6">
-        <h1 class="text-2xl font-semibold">Skill Scout</h1>
-        <p class="text-zinc-400 mt-1">Discover trending Codex skills, MCP servers, and related plugins/connectors/APIs.</p>
+  <body class="min-h-screen bg-zinc-950 text-zinc-100">
+    <div class="absolute inset-0 -z-10 overflow-hidden">
+      <div class="absolute -top-40 left-1/2 -translate-x-1/2 h-[520px] w-[920px] rounded-full blur-3xl opacity-30"
+           style="background: radial-gradient(circle at 50% 50%, rgba(99,102,241,.55), rgba(34,211,238,.25), rgba(0,0,0,0));"></div>
+      <div class="absolute -bottom-44 right-[-140px] h-[520px] w-[520px] rounded-full blur-3xl opacity-25"
+           style="background: radial-gradient(circle at 50% 50%, rgba(34,211,238,.45), rgba(99,102,241,.18), rgba(0,0,0,0));"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto px-5 sm:px-6 py-8">
+      <header class="mb-6 flex items-start justify-between gap-4">
+        <div>
+          <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight">Skill Scout</h1>
+          <p class="text-zinc-400 mt-1 max-w-2xl">
+            Discover trending Codex skills, MCP servers, and related plugins/connectors/APIs.
+          </p>
+        </div>
+        <div class="flex items-center gap-2">
+          <a class="text-sm text-zinc-300 hover:text-white underline-offset-4 hover:underline"
+             href="/" title="Back to landing">Home</a>
+        </div>
       </header>
 
-      <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 mb-6">
-        <div class="flex gap-3 flex-col sm:flex-row">
-          <input id="q" class="flex-1 bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 outline-none focus:border-zinc-600"
-                 placeholder="Search (e.g., 'playwright', 'slack connector', 'vector db mcp')"
-                 value="{{ default_query }}" />
-          <button id="searchBtn" class="bg-indigo-600 hover:bg-indigo-500 rounded-lg px-4 py-2 font-medium">Search</button>
-          <button id="askBtn" class="bg-zinc-800 hover:bg-zinc-700 rounded-lg px-4 py-2 font-medium">Ask</button>
+      <div class="glass ring-soft shadow-soft rounded-3xl p-4 sm:p-6 mb-6">
+        <div class="flex gap-3 flex-col sm:flex-row sm:items-center">
+          <div class="flex-1">
+            <label class="text-xs text-zinc-400">Search</label>
+            <input id="q"
+                   class="mt-1 w-full bg-zinc-950/60 border border-zinc-800 rounded-2xl px-3.5 py-2.5 outline-none focus:border-indigo-500/70 focus:ring-2 focus:ring-indigo-500/20"
+                   placeholder="Try: frontend, slack connector, vector db mcp, playwright"
+                   value="{{ default_query }}" />
+          </div>
+          <div class="flex gap-2 sm:pt-6">
+            <button id="searchBtn"
+                    class="btn btn-primary flex-1 sm:flex-none rounded-2xl px-4 py-2.5">
+              Search
+            </button>
+            <button id="askBtn"
+                    class="btn btn-secondary flex-1 sm:flex-none rounded-2xl px-4 py-2.5">
+              Ask
+            </button>
+            <button id="refreshBtn"
+                    class="btn btn-ghost flex-1 sm:flex-none rounded-2xl px-4 py-2.5">
+              Refresh
+            </button>
+          </div>
         </div>
-        <div class="mt-3 flex flex-wrap gap-3 text-sm text-zinc-300">
+
+        <div class="mt-4 flex flex-wrap gap-3 text-sm text-zinc-300">
+          <div class="text-xs text-zinc-400 w-full">Filter types</div>
           {% for t in default_types %}
-          <label class="flex items-center gap-2">
+          <label class="flex items-center gap-2 px-2 py-1 rounded-xl bg-zinc-950/30 border border-zinc-800/60">
             <input type="checkbox" class="accent-indigo-500" name="type" value="{{ t }}" checked />
-            <span>{{ t }}</span>
+            <span class="text-zinc-200">{{ t }}</span>
           </label>
           {% endfor %}
         </div>
-        <div class="mt-3 text-xs text-zinc-500">
-          Tip: run <code class="text-zinc-200">python -m skill_scout.cli refresh</code> to update the index.
+
+        <div class="mt-4 text-xs text-zinc-400 flex flex-wrap gap-2 items-center">
+          <span class="chip">
+            Local index: <code class="text-zinc-200">skill_scout.db</code>
+          </span>
+          <span class="text-zinc-500">Tip: `refresh` pulls latest sources and recomputes scores.</span>
         </div>
       </div>
 
-      <div id="status" class="text-sm text-zinc-400 mb-3"></div>
-      <div id="agent" class="hidden bg-zinc-900/60 border border-zinc-800 rounded-xl p-4 mb-4"></div>
+      <div class="flex items-center justify-between gap-3 mb-3">
+        <div id="status" class="text-sm text-zinc-400"></div>
+        <div id="rightStatus" class="text-xs text-zinc-500"></div>
+      </div>
+
+      <div id="agent" class="hidden glass ring-soft shadow-soft2 rounded-3xl p-4 sm:p-5 mb-4"></div>
+
+      <div id="empty" class="hidden glass ring-soft shadow-soft2 rounded-3xl p-7 text-center">
+        <div class="text-base font-semibold">No results yet</div>
+        <div class="text-sm text-zinc-400 mt-1">
+          Click <span class="text-zinc-200 font-medium">Refresh</span> to build the index, then search again.
+        </div>
+        <div class="mt-4 flex items-center justify-center gap-2">
+          <button class="btn btn-secondary rounded-2xl px-4 py-2.5" onclick="runRefresh()">
+            Refresh index
+          </button>
+        </div>
+      </div>
+
       <div id="results" class="grid grid-cols-1 gap-4"></div>
     </div>
 
@@ -60,7 +120,7 @@
         if (item.mcp_status) meta.push(`${esc(item.mcp_status)}`);
 
         return `
-          <div class="bg-zinc-900/60 border border-zinc-800 rounded-xl p-4">
+          <div class="glass ring-soft shadow-soft2 rounded-3xl p-4 sm:p-5 transition-colors">
             <div class="flex items-start justify-between gap-3">
               <div>
                 <div class="text-xs text-zinc-500">${esc(item.type)} · ${esc(item.source)}</div>
@@ -72,7 +132,7 @@
             <div class="mt-3 flex flex-wrap gap-2">${tags}</div>
             <div class="mt-3 flex items-center justify-between gap-3">
               <div class="text-xs text-zinc-500">Score: ${Number(item.score || 0).toFixed(2)}</div>
-              <button class="text-xs text-indigo-300 hover:underline" onclick="showInstall('${esc(item.id)}')">Install hints</button>
+              <button class="text-xs text-indigo-300 hover:underline underline-offset-4" onclick="showInstall('${esc(item.id)}')">Install hints</button>
             </div>
           </div>
         `;
@@ -86,9 +146,29 @@
         const data = await res.json();
         const hints = (data.hints || []).map(h => `<li class="mt-1"><code class="text-zinc-200">${esc(h)}</code></li>`).join("");
         agentBox.innerHTML = `
-          <div class="text-sm font-semibold">Install hints</div>
+          <div class="flex items-start justify-between gap-3">
+            <div class="text-sm font-semibold">Install hints</div>
+            <button class="text-xs text-zinc-400 hover:text-zinc-200 underline-offset-4 hover:underline" onclick="document.getElementById('agent').classList.add('hidden')">Close</button>
+          </div>
           <ul class="text-sm mt-2">${hints || "<li class='text-zinc-400'>No hints.</li>"}</ul>
         `;
+      }
+
+      async function runRefresh() {
+        const right = document.getElementById("rightStatus");
+        right.textContent = "Refreshing index…";
+        try {
+          const res = await fetch("/api/refresh", { method: "POST", headers: {"Content-Type":"application/json"}, body: "{}" });
+          const data = await res.json();
+          if (data && data.ok) {
+            right.textContent = `Indexed ${data.total_indexed || 0} items`;
+          } else {
+            right.textContent = "Refresh failed";
+          }
+        } catch (e) {
+          right.textContent = "Refresh failed";
+        }
+        await runSearch();
       }
 
       async function runSearch() {
@@ -104,12 +184,11 @@
         const res = await fetch(`/api/items?${params.toString()}`);
         const data = await res.json();
         const items = data.items || [];
-        if (items.length === 0) {
-          document.getElementById("status").textContent = `Found 0 results (index may be empty). Click Ask or refresh the index.`;
-        } else {
-          document.getElementById("status").textContent = `Found ${items.length} results`;
-        }
+        document.getElementById("status").textContent = `Found ${items.length} results`;
         document.getElementById("results").innerHTML = items.map(card).join("");
+        const empty = document.getElementById("empty");
+        if (items.length === 0) empty.classList.remove("hidden");
+        else empty.classList.add("hidden");
       }
 
       document.getElementById("searchBtn").addEventListener("click", runSearch);
@@ -131,7 +210,10 @@
 
         const rec = (data.recommended || []).map(r => `<li class="mt-1"><code class="text-zinc-200">${esc(r.id)}</code> — <span class="text-zinc-300">${esc(r.why || "")}</span></li>`).join("");
         agentBox.innerHTML = `
-          <div class="text-sm font-semibold">Agent picks</div>
+          <div class="flex items-start justify-between gap-3">
+            <div class="text-sm font-semibold">Agent picks</div>
+            <button class="text-xs text-zinc-400 hover:text-zinc-200 underline-offset-4 hover:underline" onclick="document.getElementById('agent').classList.add('hidden')">Close</button>
+          </div>
           <ul class="text-sm mt-2">${rec || "<li class='text-zinc-400'>No recommendations.</li>"}</ul>
           <div class="text-xs text-zinc-500 mt-3">${esc(data.notes || "")}</div>
         `;
@@ -139,6 +221,7 @@
       document.getElementById("q").addEventListener("keydown", (e) => {
         if (e.key === "Enter") runSearch();
       });
+      document.getElementById("refreshBtn").addEventListener("click", runRefresh);
 
       runSearch();
     </script>

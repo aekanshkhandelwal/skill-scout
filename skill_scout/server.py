@@ -9,6 +9,8 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 from skill_scout.collectors.antigravity_directory import collect_antigravity_mcp_directory
+from skill_scout.collectors.agentskills_directory import collect_agentskills_directory
+from skill_scout.collectors.claudskills_directory import collect_claudskills_directory
 from skill_scout.collectors.github_skills import collect_github_skill_repos
 from skill_scout.collectors.mcp_registry import collect_mcp_registry
 from skill_scout.collectors.npm_registry import collect_npm_mcp
@@ -69,11 +71,29 @@ def create_app(db_path: str) -> FastAPI:
         else:
             results.append(r4)
 
+        r5 = await _try("agentskills_directory", collect_agentskills_directory)
+        if isinstance(r5, list):
+            results.append({"label": "agentskills_directory", "count": len(r5), "error": None})
+            items.extend(r5)
+        else:
+            results.append(r5)
+
+        r6 = await _try("claudskills_directory", collect_claudskills_directory)
+        if isinstance(r6, list):
+            results.append({"label": "claudskills_directory", "count": len(r6), "error": None})
+            items.extend(r6)
+        else:
+            results.append(r6)
+
         scored = compute_scores(items)
         await upsert_many(db_path, scored)
         return {"ok": True, "total_indexed": len(scored), "collectors": results}
 
     @app.get("/", response_class=HTMLResponse)
+    async def landing(request: Request) -> HTMLResponse:
+        return templates.TemplateResponse("landing.html", {"request": request})
+
+    @app.get("/app", response_class=HTMLResponse)
     async def home(request: Request) -> HTMLResponse:
         return templates.TemplateResponse(
             "index.html",
