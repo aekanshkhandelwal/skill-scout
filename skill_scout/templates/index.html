@@ -3,100 +3,158 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Skill Scout</title>
+    <title>Skill Scout | Discovery Engine</title>
     <meta name="description" content="Search and discover trending Codex skills, MCP servers, and developer tooling." />
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/site.css" />
-    <style>html{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}</style>
   </head>
-  <body class="min-h-screen bg-zinc-950 text-zinc-100">
-    <div class="absolute inset-0 -z-10 overflow-hidden">
-      <div class="absolute -top-40 left-1/2 -translate-x-1/2 h-[520px] w-[920px] rounded-full blur-3xl opacity-30"
-           style="background: radial-gradient(circle at 50% 50%, rgba(99,102,241,.55), rgba(34,211,238,.25), rgba(0,0,0,0));"></div>
-      <div class="absolute -bottom-44 right-[-140px] h-[520px] w-[520px] rounded-full blur-3xl opacity-25"
-           style="background: radial-gradient(circle at 50% 50%, rgba(34,211,238,.45), rgba(99,102,241,.18), rgba(0,0,0,0));"></div>
+  <body class="bg-[#030303] text-white min-h-screen selection:bg-indigo-500/30">
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      <div class="absolute inset-0 grid-bg opacity-10"></div>
+      <div class="atmosphere">
+        <div class="orb bg-indigo-600 top-[-200px] left-[-200px]" style="opacity: 0.1;"></div>
+        <div class="orb bg-cyan-600 bottom-[-200px] right-[-200px]" style="animation-delay: -7s; opacity: 0.05;"></div>
+      </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-5 sm:px-6 py-8">
-      <header class="mb-6 flex items-start justify-between gap-4">
-        <div>
-          <h1 class="text-2xl sm:text-3xl font-semibold tracking-tight">Skill Scout</h1>
-          <p class="text-zinc-400 mt-1 max-w-2xl">
-            Discover trending Codex skills, MCP servers, and related plugins/connectors/APIs.
-          </p>
+    <div class="max-w-[1440px] mx-auto px-6 sm:px-10 py-8">
+      <!-- Header -->
+      <header class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 mb-12">
+        <div class="flex items-center gap-4">
+          <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+            <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </div>
+          <div>
+            <h1 class="text-2xl font-bold tracking-tight font-[Outfit]">Skill Scout</h1>
+            <p class="text-zinc-500 text-sm font-medium">Discover trending Codex skills, MCP servers, and related plugins/connectors/APIs.</p>
+          </div>
         </div>
-        <div class="flex items-center gap-2">
-          <a class="text-sm text-zinc-300 hover:text-white underline-offset-4 hover:underline"
-             href="/" title="Back to landing">Home</a>
-        </div>
+        <nav class="flex items-center gap-6">
+          <a href="/" class="nav-link">Landing</a>
+          <a href="https://github.com/aekanshkhandelwal/skill-scout" class="btn btn-secondary !rounded-full py-2 px-5 text-sm" target="_blank" rel="noreferrer">
+            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.43.372.823 1.102.823 2.222 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            GitHub
+          </a>
+        </nav>
       </header>
 
-      <div class="glass ring-soft shadow-soft rounded-3xl p-4 sm:p-6 mb-6">
-        <div class="flex gap-3 flex-col sm:flex-row sm:items-center">
-          <div class="flex-1">
-            <label class="text-xs text-zinc-400">Search</label>
-            <input id="q"
-                   class="mt-1 w-full bg-zinc-950/60 border border-zinc-800 rounded-2xl px-3.5 py-2.5 outline-none focus:border-indigo-500/70 focus:ring-2 focus:ring-indigo-500/20"
-                   placeholder="Try: frontend, slack connector, vector db mcp, playwright"
-                   value="{{ default_query }}" />
+      <!-- Search Section -->
+      <div class="glass ring-soft rounded-[2rem] p-6 mb-12 shadow-premium">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-end">
+          <div class="lg:col-span-8">
+            <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3 block">Search Index</label>
+            <div class="relative group">
+              <div class="absolute inset-y-0 left-4 flex items-center text-zinc-500 group-focus-within:text-indigo-400 transition-colors">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M21 21l-4.3-4.3m1.8-5.2a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              </div>
+              <input id="q"
+                     class="w-full bg-black border border-zinc-800 rounded-2xl pl-12 pr-12 py-4 outline-none focus:border-indigo-500/50 focus:ring-4 focus:ring-indigo-500/10 transition-all text-lg placeholder:text-zinc-600"
+                     placeholder="Search skills, MCP servers, plugins, connectors…"
+                     value="{{ default_query }}" />
+              <button id="clearQ" class="absolute inset-y-0 right-3 my-2 px-3 rounded-xl text-zinc-500 hover:text-white hover:bg-zinc-800 transition-all hidden">
+                ✕
+              </button>
+            </div>
           </div>
-          <div class="flex gap-2 sm:pt-6">
-            <button id="searchBtn"
-                    class="btn btn-primary flex-1 sm:flex-none rounded-2xl px-4 py-2.5">
-              Search
-            </button>
-            <button id="askBtn"
-                    class="btn btn-secondary flex-1 sm:flex-none rounded-2xl px-4 py-2.5">
-              Ask
-            </button>
-            <button id="refreshBtn"
-                    class="btn btn-ghost flex-1 sm:flex-none rounded-2xl px-4 py-2.5">
-              Refresh
-            </button>
+          <div class="lg:col-span-4 flex gap-3">
+             <button id="searchBtn" class="btn btn-primary flex-1 h-[60px] text-lg">Search</button>
+             <button id="askBtn" class="btn btn-secondary h-[60px] px-8 text-lg group">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400 group-hover:from-white group-hover:to-white transition-all">Ask AI</span>
+             </button>
+             <button id="refreshBtn" class="btn btn-ghost h-[60px] px-4" title="Refresh Index">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+             </button>
           </div>
         </div>
 
-        <div class="mt-4 flex flex-wrap gap-3 text-sm text-zinc-300">
-          <div class="text-xs text-zinc-400 w-full">Filter types</div>
-          {% for t in default_types %}
-          <label class="flex items-center gap-2 px-2 py-1 rounded-xl bg-zinc-950/30 border border-zinc-800/60">
-            <input type="checkbox" class="accent-indigo-500" name="type" value="{{ t }}" checked />
-            <span class="text-zinc-200">{{ t }}</span>
-          </label>
-          {% endfor %}
-        </div>
-
-        <div class="mt-4 text-xs text-zinc-400 flex flex-wrap gap-2 items-center">
-          <span class="chip">
-            Local index: <code class="text-zinc-200">skill_scout.db</code>
-          </span>
-          <span class="text-zinc-500">Tip: `refresh` pulls latest sources and recomputes scores.</span>
-        </div>
-      </div>
-
-      <div class="flex items-center justify-between gap-3 mb-3">
-        <div id="status" class="text-sm text-zinc-400"></div>
-        <div id="rightStatus" class="text-xs text-zinc-500"></div>
-      </div>
-
-      <div id="agent" class="hidden glass ring-soft shadow-soft2 rounded-3xl p-4 sm:p-5 mb-4"></div>
-
-      <div id="empty" class="hidden glass ring-soft shadow-soft2 rounded-3xl p-7 text-center">
-        <div class="text-base font-semibold">No results yet</div>
-        <div class="text-sm text-zinc-400 mt-1">
-          Click <span class="text-zinc-200 font-medium">Refresh</span> to build the index, then search again.
-        </div>
-        <div class="mt-4 flex items-center justify-center gap-2">
-          <button class="btn btn-secondary rounded-2xl px-4 py-2.5" onclick="runRefresh()">
-            Refresh index
-          </button>
+        <div class="mt-8 pt-8 border-t border-zinc-900 flex flex-col md:flex-row md:items-center justify-between gap-6">
+          <div>
+            <span class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3 block">Filter Categories</span>
+            <div class="flex flex-wrap gap-2">
+              {% for t in default_types %}
+              <label class="cursor-pointer">
+                <input type="checkbox" class="peer sr-only" name="type" value="{{ t }}" checked />
+                <span class="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-zinc-800 bg-zinc-900/30 text-zinc-400 text-sm
+                             peer-checked:border-indigo-500/50 peer-checked:bg-indigo-500/10 peer-checked:text-indigo-300
+                             hover:border-zinc-700 transition-all">
+                  <span class="h-1.5 w-1.5 rounded-full bg-zinc-600 peer-checked:bg-indigo-400"></span>
+                  {{ t }}
+                </span>
+              </label>
+              {% endfor %}
+            </div>
+          </div>
+          <div class="flex items-center gap-4">
+             <div class="flex items-center gap-2">
+                <label class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Sort</label>
+                <select id="sort" class="bg-black border border-zinc-800 rounded-xl px-4 py-2 text-sm text-zinc-300 outline-none focus:border-indigo-500/50">
+                  <option value="score">Trending Score</option>
+                  <option value="stars">GitHub Stars</option>
+                  <option value="recent">Recently Updated</option>
+                </select>
+             </div>
+             <button id="clearAll" class="text-xs font-bold text-zinc-600 hover:text-zinc-400 uppercase tracking-widest underline decoration-zinc-800 underline-offset-4">Reset</button>
+          </div>
         </div>
       </div>
 
-      <div id="results" class="grid grid-cols-1 gap-4"></div>
+      <!-- Main Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        <div class="lg:col-span-8 space-y-6">
+           <div class="flex items-center justify-between px-2">
+             <h2 id="status" class="text-sm font-semibold text-zinc-400">Loading results...</h2>
+             <div class="text-xs text-zinc-600">Index: <span class="text-zinc-400">skill_scout.db</span></div>
+           </div>
+
+           <div id="empty" class="hidden glass ring-soft rounded-3xl p-12 text-center">
+             <div class="text-xl font-bold mb-2">No results</div>
+             <p class="text-zinc-500 mb-6">Click Refresh to rebuild the index, then try again.</p>
+             <button class="btn btn-primary" onclick="runRefresh()">Refresh Index</button>
+           </div>
+
+           <div id="results" class="space-y-4"></div>
+
+           <div class="flex items-center justify-between pt-6">
+             <button id="prevPage" class="btn btn-secondary py-2 px-6">Previous</button>
+             <span id="pageInfo" class="text-xs font-bold text-zinc-500 uppercase tracking-widest">Page 1 / 1</span>
+             <button id="nextPage" class="btn btn-secondary py-2 px-6">Next</button>
+           </div>
+        </div>
+
+        <!-- Sidebar / AI Picks -->
+        <aside class="lg:col-span-4 sticky top-8">
+           <div class="glass ring-soft rounded-[2rem] p-6 shadow-premium overflow-hidden">
+              <div class="flex items-center justify-between mb-6">
+                <div>
+                   <h2 class="text-lg font-bold font-[Outfit]">Agent Picks</h2>
+                   <p id="agentSub" class="text-xs text-zinc-500 mt-0.5">Run Ask for recommendations.</p>
+                </div>
+                <div class="chip border-indigo-500/30 text-indigo-400">AI</div>
+              </div>
+              
+              <div id="agent" class="space-y-4 min-h-[100px]">
+                 <div class="text-sm text-zinc-600 text-center py-8 bg-zinc-900/20 rounded-2xl border border-dashed border-zinc-800">
+                    Use <span class="text-indigo-400 font-bold">Ask AI</span> with a search term to see recommendations.
+                 </div>
+              </div>
+              
+              <button id="askMore" class="hidden mt-6 w-full btn btn-ghost text-sm">Ask for more recommendations</button>
+           </div>
+
+           <div class="mt-6 p-6 rounded-[2rem] border border-zinc-900/50 bg-zinc-950/30">
+              <h3 class="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-3">Install Monitor</h3>
+              <div id="net" class="text-sm text-zinc-400 flex items-center gap-2">
+                 <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                 System Ready
+              </div>
+           </div>
+        </aside>
+      </div>
     </div>
 
     <script>
@@ -105,12 +163,17 @@
       }
 
       function esc(s) {
-        return (s || "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");
+        return (s || "").toString()
+          .replaceAll("&","&amp;")
+          .replaceAll("<","&lt;")
+          .replaceAll(">","&gt;")
+          .replaceAll("'","&#39;")
+          .replaceAll("\"","&quot;");
       }
 
       function card(item) {
         const tags = (item.tags || []).slice(0, 8).map(t =>
-          `<span class="px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-200 text-xs">${esc(t)}</span>`
+          `<span class="px-2.5 py-1 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-400 text-[10px] font-bold uppercase tracking-wider">${esc(t)}</span>`
         ).join("");
 
         const meta = [];
@@ -119,20 +182,32 @@
         if (item.mcp_version) meta.push(`v ${esc(item.mcp_version)}`);
         if (item.mcp_status) meta.push(`${esc(item.mcp_status)}`);
 
+        const pub = item.publisher ? `<span class="text-indigo-400/80">${esc(item.publisher)}</span>` : "";
+        const score = Number(item.score || 0);
         return `
-          <div class="glass ring-soft shadow-soft2 rounded-3xl p-4 sm:p-5 transition-colors">
-            <div class="flex items-start justify-between gap-3">
-              <div>
-                <div class="text-xs text-zinc-500">${esc(item.type)} · ${esc(item.source)}</div>
-                <a class="text-lg font-semibold hover:underline" href="${esc(item.url)}" target="_blank" rel="noreferrer">${esc(item.title)}</a>
+          <div class="reveal glass ring-soft rounded-2xl p-6 glow-card transition-all is-visible">
+            <div class="flex items-start justify-between gap-6">
+              <div class="min-w-0 flex-1">
+                <div class="flex items-center gap-3 mb-2">
+                   <span class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest px-2 py-0.5 rounded bg-indigo-400/5 border border-indigo-400/10">${esc(item.type)}</span>
+                   <span class="text-[10px] font-bold text-zinc-500 uppercase tracking-widest">${esc(item.source)}${pub ? ` • ${pub}` : ""}</span>
+                </div>
+                <a class="text-xl font-bold font-[Outfit] text-white hover:text-indigo-400 transition-colors block mb-1" href="${esc(item.url)}" target="_blank" rel="noreferrer">${esc(item.title)}</a>
+                <p class="text-sm text-zinc-500 leading-relaxed line-clamp-2 mb-4">${esc(item.description || "")}</p>
+                <div class="flex flex-wrap gap-2">${tags}</div>
               </div>
-              <div class="text-xs text-zinc-400 text-right whitespace-nowrap">${meta.join(" · ")}</div>
+              <div class="text-right shrink-0">
+                <div class="text-[10px] font-bold text-zinc-600 uppercase tracking-widest mb-1">Impact Score</div>
+                <div class="text-2xl font-bold font-[Outfit] text-emerald-400">${score.toFixed(1)}</div>
+                ${meta.length ? `<div class="mt-2 flex flex-col items-end gap-1 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">${meta.map(m => `<div>${m}</div>`).join("")}</div>` : ""}
+              </div>
             </div>
-            <p class="text-sm text-zinc-300 mt-2">${esc(item.description || "")}</p>
-            <div class="mt-3 flex flex-wrap gap-2">${tags}</div>
-            <div class="mt-3 flex items-center justify-between gap-3">
-              <div class="text-xs text-zinc-500">Score: ${Number(item.score || 0).toFixed(2)}</div>
-              <button class="text-xs text-indigo-300 hover:underline underline-offset-4" onclick="showInstall('${esc(item.id)}')">Install hints</button>
+            <div class="mt-6 pt-4 border-t border-zinc-900/50 flex items-center justify-between">
+              <button class="text-xs font-bold text-indigo-400 hover:text-indigo-300 uppercase tracking-widest flex items-center gap-1.5" onclick="showInstall('${esc(item.id)}')">
+                 <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                 Install Hints
+              </button>
+              <button class="text-[10px] font-bold text-zinc-600 hover:text-zinc-400 uppercase tracking-widest transition-colors" onclick="copyId('${esc(item.id)}')">Copy ID</button>
             </div>
           </div>
         `;
@@ -140,88 +215,151 @@
 
       async function showInstall(id) {
         const agentBox = document.getElementById("agent");
-        agentBox.classList.remove("hidden");
-        agentBox.innerHTML = `<div class="text-sm text-zinc-400">Loading install hints…</div>`;
+        agentBox.innerHTML = `<div class="flex flex-col items-center py-8"><div class="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div><div class="text-xs text-zinc-500 mt-4 uppercase tracking-widest font-bold">Analyzing hints...</div></div>`;
         const res = await fetch(`/api/items/${encodeURIComponent(id)}/install`);
         const data = await res.json();
-        const hints = (data.hints || []).map(h => `<li class="mt-1"><code class="text-zinc-200">${esc(h)}</code></li>`).join("");
+        const hints = (data.hints || []).map(h => `<li class="p-3 rounded-xl bg-black border border-zinc-900 text-xs text-zinc-400 font-mono break-all mb-2"><span class="text-indigo-400 mr-2">$</span>${esc(h)}</li>`).join("");
         agentBox.innerHTML = `
-          <div class="flex items-start justify-between gap-3">
-            <div class="text-sm font-semibold">Install hints</div>
-            <button class="text-xs text-zinc-400 hover:text-zinc-200 underline-offset-4 hover:underline" onclick="document.getElementById('agent').classList.add('hidden')">Close</button>
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xs font-bold text-zinc-400 uppercase tracking-widest">Install Instructions</h3>
+            <button class="text-xs text-zinc-600 hover:text-zinc-300" onclick="resetAgentSidebar()">✕</button>
           </div>
-          <ul class="text-sm mt-2">${hints || "<li class='text-zinc-400'>No hints.</li>"}</ul>
+          <ul class="space-y-1">${hints || "<li class='text-center py-4 text-zinc-600 text-xs'>No hints available for this item.</li>"}</ul>
         `;
       }
 
+      function resetAgentSidebar() {
+         document.getElementById("agent").innerHTML = `<div class="text-sm text-zinc-600 text-center py-8 bg-zinc-900/20 rounded-2xl border border-dashed border-zinc-800">Use <span class="text-indigo-400 font-bold">Ask AI</span> with a search term to see recommendations.</div>`;
+         document.getElementById("agentSub").textContent = "Semantic AI recommendations";
+         document.getElementById("askMore").classList.add("hidden");
+      }
+
       async function runRefresh() {
-        const right = document.getElementById("rightStatus");
-        right.textContent = "Refreshing index…";
+        const net = document.getElementById("net");
+        net.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-indigo-500 animate-pulse"></span> Rebuilding Index...`;
         try {
           const res = await fetch("/api/refresh", { method: "POST", headers: {"Content-Type":"application/json"}, body: "{}" });
           const data = await res.json();
           if (data && data.ok) {
-            right.textContent = `Indexed ${data.total_indexed || 0} items`;
+            net.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> ${data.total_indexed || 0} Items Indexed`;
           } else {
-            right.textContent = "Refresh failed";
+            net.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> Indexing Failed`;
           }
         } catch (e) {
-          right.textContent = "Refresh failed";
+          net.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-red-500"></span> System Offline`;
         }
         await runSearch();
       }
 
       async function runSearch() {
-        const q = document.getElementById("q").value.trim();
+        const qEl = document.getElementById("q");
+        const q = qEl.value.trim();
         const types = selectedTypes();
+        const sort = document.getElementById("sort").value;
+        const pageSize = 10;
+        const offset = ((window.__page || 1) - 1) * pageSize;
         const params = new URLSearchParams();
         if (q) params.set("q", q);
         for (const t of types) params.append("types", t);
-        params.set("limit", "50");
-        params.set("offset", "0");
+        params.set("limit", String(pageSize));
+        params.set("offset", String(offset));
+        params.set("sort", sort);
 
-        document.getElementById("status").textContent = "Searching…";
+        document.getElementById("status").textContent = "Filtering index...";
         const res = await fetch(`/api/items?${params.toString()}`);
         const data = await res.json();
         const items = data.items || [];
-        document.getElementById("status").textContent = `Found ${items.length} results`;
+        const total = data.total != null ? Number(data.total) : items.length;
+        const page = window.__page || 1;
+        const pages = Math.max(1, Math.ceil(total / pageSize));
+        
+        document.getElementById("status").textContent = total > 0 ? `Showing ${Math.min((page-1)*pageSize+1,total)}–${Math.min(page*pageSize,total)} of ${total} capabilities` : "No matching capabilities";
+        document.getElementById("pageInfo").textContent = `Page ${page} / ${pages}`;
+        document.getElementById("prevPage").disabled = page <= 1;
+        document.getElementById("nextPage").disabled = page >= pages;
         document.getElementById("results").innerHTML = items.map(card).join("");
+        
         const empty = document.getElementById("empty");
         if (items.length === 0) empty.classList.remove("hidden");
         else empty.classList.add("hidden");
+
+        const clearBtn = document.getElementById("clearQ");
+        if (q) clearBtn.classList.remove("hidden"); else clearBtn.classList.add("hidden");
       }
 
-      document.getElementById("searchBtn").addEventListener("click", runSearch);
+      document.getElementById("searchBtn").addEventListener("click", () => { window.__page = 1; runSearch(); });
       document.getElementById("askBtn").addEventListener("click", async () => {
         const q = document.getElementById("q").value.trim();
         const types = selectedTypes();
         if (!q) return;
-
-        const agentBox = document.getElementById("agent");
-        agentBox.classList.remove("hidden");
-        agentBox.innerHTML = `<div class="text-sm text-zinc-400">Thinking…</div>`;
-
-        const res = await fetch("/api/ask", {
-          method: "POST",
-          headers: {"Content-Type": "application/json"},
-          body: JSON.stringify({prompt: q, types, k: 10}),
-        });
-        const data = await res.json();
-
-        const rec = (data.recommended || []).map(r => `<li class="mt-1"><code class="text-zinc-200">${esc(r.id)}</code> — <span class="text-zinc-300">${esc(r.why || "")}</span></li>`).join("");
-        agentBox.innerHTML = `
-          <div class="flex items-start justify-between gap-3">
-            <div class="text-sm font-semibold">Agent picks</div>
-            <button class="text-xs text-zinc-400 hover:text-zinc-200 underline-offset-4 hover:underline" onclick="document.getElementById('agent').classList.add('hidden')">Close</button>
-          </div>
-          <ul class="text-sm mt-2">${rec || "<li class='text-zinc-400'>No recommendations.</li>"}</ul>
-          <div class="text-xs text-zinc-500 mt-3">${esc(data.notes || "")}</div>
-        `;
+        await renderAgentPicks(q, types);
       });
       document.getElementById("q").addEventListener("keydown", (e) => {
-        if (e.key === "Enter") runSearch();
+        if (e.key === "Enter") { window.__page = 1; runSearch(); }
       });
       document.getElementById("refreshBtn").addEventListener("click", runRefresh);
+      document.getElementById("askMore").addEventListener("click", async () => {
+        const q = document.getElementById("q").value.trim();
+        const types = selectedTypes();
+        const currentCount = document.querySelectorAll('#agent > div').length;
+        await renderAgentPicks(q, types, currentCount + 5);
+      });
+      document.getElementById("sort").addEventListener("change", () => { window.__page = 1; runSearch(); });
+      document.getElementById("prevPage").addEventListener("click", () => { window.__page = Math.max(1, (window.__page||1) - 1); runSearch(); });
+      document.getElementById("nextPage").addEventListener("click", () => { window.__page = (window.__page||1) + 1; runSearch(); });
+      document.getElementById("clearQ").addEventListener("click", () => { document.getElementById("q").value = ""; window.__page = 1; runSearch(); });
+      document.getElementById("clearAll").addEventListener("click", () => {
+        document.getElementById("q").value = "";
+        document.querySelectorAll('input[name="type"]').forEach(el => el.checked = true);
+        window.__page = 1;
+        runSearch();
+      });
+
+      document.querySelectorAll('input[name="type"]').forEach(el => {
+        el.addEventListener('change', () => { window.__page = 1; runSearch(); });
+      });
+
+      function copyId(id) {
+        try { navigator.clipboard.writeText(id); } catch {}
+      }
+
+      async function renderAgentPicks(prompt, types, k = 5) {
+        const agent = document.getElementById("agent");
+        const sub = document.getElementById("agentSub");
+        const moreBtn = document.getElementById("askMore");
+        
+        sub.textContent = `Recommended for "${prompt}"`;
+        if (k === 5) {
+          agent.innerHTML = `<div class="flex flex-col items-center py-8"><div class="w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div><div class="text-xs text-zinc-500 mt-4 uppercase tracking-widest font-bold">Consulting Intelligence...</div></div>`;
+        }
+        
+        try {
+          const res = await fetch("/api/ask", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({prompt, types, k}),
+          });
+          const data = await res.json();
+          const rec = (data.recommended || []);
+          if (!rec.length) {
+            agent.innerHTML = `<div class="text-center py-8 text-zinc-600 text-xs">No specific recommendations found.</div>`;
+            return;
+          }
+          agent.innerHTML = rec.map((r, idx) => `
+            <div class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 hover:border-indigo-500/30 transition-all">
+              <div class="flex items-start justify-between gap-3 mb-2">
+                 <span class="text-[10px] font-bold text-zinc-600">#${idx+1}</span>
+                 <button class="text-[10px] font-bold text-indigo-400 uppercase tracking-widest" onclick="showInstall('${esc(r.id)}')">Install</button>
+              </div>
+              <div class="text-xs font-bold text-white mb-1 truncate">${esc(r.id)}</div>
+              <div class="text-[10px] text-zinc-500 leading-normal">${esc(r.why||'')}</div>
+            </div>
+          `).join("");
+          moreBtn.classList.remove("hidden");
+        } catch (e) {
+          agent.innerHTML = `<div class="text-center py-8 text-red-500 text-xs">Consultation Failed</div>`;
+        }
+      }
 
       runSearch();
     </script>

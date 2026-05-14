@@ -6,6 +6,7 @@ from typing import Any
 from dateutil.parser import isoparse
 
 from skill_scout.http import build_http_client
+from skill_scout.publishers import github_owner_from_url, normalize_company_name
 from skill_scout.types import DiscoveredItem
 
 
@@ -51,6 +52,8 @@ async def collect_mcp_registry(limit_total: int = 500) -> list[DiscoveredItem]:
                 updated_at = _safe_dt(s.get("updatedAt") or s.get("updated_at"))
 
                 url = s.get("homepage") or s.get("repository") or f"{MCP_BASE}/v0.1/servers/{name}"
+                owner = github_owner_from_url(str(s.get("repository") or "")) or github_owner_from_url(str(url))
+                publisher = normalize_company_name(owner or "") or owner
 
                 items.append(
                     DiscoveredItem(
@@ -60,7 +63,9 @@ async def collect_mcp_registry(limit_total: int = 500) -> list[DiscoveredItem]:
                         description=desc,
                         source="mcp_registry",
                         url=url,
-                        tags=["mcp"],
+                        tags=["mcp"] + ([f"publisher:{owner}"] if owner else []) + ([f"company:{publisher}"] if publisher and normalize_company_name(publisher) else []),
+                        publisher=publisher,
+                        publisher_type="github_owner" if owner else None,
                         last_pushed_at=updated_at,
                         mcp_name=name or None,
                         mcp_version=str(version) if version else None,
@@ -73,4 +78,3 @@ async def collect_mcp_registry(limit_total: int = 500) -> list[DiscoveredItem]:
                 break
 
     return items
-

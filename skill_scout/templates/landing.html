@@ -8,232 +8,242 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/static/site.css" />
-    <style>html{font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Arial}</style>
   </head>
-  <body class="min-h-screen bg-zinc-950 text-zinc-100">
-    <div class="absolute inset-0 -z-10 overflow-hidden">
-      <div class="absolute inset-0 gridbg opacity-[0.09]"></div>
-      <div class="absolute -top-52 left-1/2 -translate-x-1/2 h-[680px] w-[1080px] rounded-full blur-3xl opacity-35"
-           style="background: radial-gradient(circle at 50% 50%, rgba(99,102,241,.60), rgba(34,211,238,.22), rgba(0,0,0,0));"></div>
-      <div class="absolute -bottom-56 right-[-180px] h-[640px] w-[640px] rounded-full blur-3xl opacity-25"
-           style="background: radial-gradient(circle at 50% 50%, rgba(34,211,238,.50), rgba(99,102,241,.18), rgba(0,0,0,0));"></div>
+  <body class="bg-[#030303] text-white selection:bg-indigo-500/30">
+    <!-- Ambient Background -->
+    <div class="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+      <div class="absolute inset-0 grid-bg opacity-20"></div>
+      <div class="atmosphere">
+        <div class="orb bg-indigo-600 top-[-100px] left-[-100px]"></div>
+        <div class="orb bg-cyan-600 bottom-[-100px] right-[-100px]" style="animation-delay: -5s;"></div>
+        <div class="orb bg-emerald-600 top-[40%] right-[-200px]" style="animation-delay: -10s; opacity: 0.1;"></div>
+      </div>
     </div>
 
-    <div class="max-w-6xl mx-auto px-5 sm:px-6 py-10">
-      <header class="flex items-center justify-between gap-4">
+    <div class="max-w-7xl mx-auto px-6 sm:px-10">
+      <!-- Header -->
+      <header class="flex items-center justify-between py-8">
         <div class="flex items-center gap-3">
-          <div class="h-10 w-10 rounded-2xl glass ring-soft flex items-center justify-center">
-            <div class="h-5 w-5 rounded-lg" style="background: linear-gradient(135deg, rgba(99,102,241,1), rgba(34,211,238,1));"></div>
+          <div class="h-10 w-10 rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-400 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
           </div>
           <div>
-            <div class="text-sm text-zinc-200 leading-none font-semibold tracking-tight">Skill Scout</div>
-            <div class="text-xs text-zinc-500 mt-1 leading-none">Codex skills • MCP servers • plugins/connectors</div>
+            <div class="text-sm font-bold tracking-tight font-[Outfit]">Skill Scout</div>
+            <div class="text-[10px] text-zinc-500 font-medium">Codex skills • MCP servers • plugins/connectors</div>
           </div>
         </div>
-        <nav class="flex items-center gap-2 text-sm">
-          <a class="btn btn-ghost py-2 px-3 rounded-xl" href="#how">How it works</a>
-          <a class="btn btn-secondary py-2 px-3 rounded-xl" href="/app">Open app</a>
-          <a class="text-zinc-500 hover:text-zinc-300 underline-offset-4 hover:underline px-2"
-             href="https://github.com/aekanshkhandelwal/skill-scout" target="_blank" rel="noreferrer">GitHub</a>
+        <nav class="hidden md:flex items-center gap-8">
+          <a href="#how" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">How it works</a>
+          <a href="#llm" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">LLM Settings</a>
+          <a href="https://github.com/aekanshkhandelwal/skill-scout" class="text-sm font-medium text-zinc-400 hover:text-white transition-colors">GitHub</a>
+          <a href="/app" class="btn btn-primary">Open App</a>
         </nav>
       </header>
 
-      <main class="mt-10">
-        <section class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          <div class="lg:col-span-6 fade-in reveal is-visible">
-            <div class="glass grad-stroke shadow-soft rounded-3xl p-6 sm:p-8 h-full shine">
-              <div class="chip">
-                <span class="dot"></span>
-                Trending discovery for your tooling stack
+      <main>
+        <!-- Hero Section -->
+        <section class="py-16 md:py-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div class="lg:col-span-7 reveal">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-zinc-900/50 border border-zinc-800 mb-6">
+              <span class="dot"></span>
+              <span class="text-xs font-semibold text-zinc-300 uppercase tracking-wider">Trending discovery for your tooling stack</span>
+            </div>
+            <h1 class="text-5xl md:text-6xl font-bold tracking-tight mb-6 leading-tight font-[Outfit]">
+              Find what to <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-cyan-400">install</span> next.
+            </h1>
+            <p class="text-lg text-zinc-400 max-w-xl mb-8 leading-relaxed">
+              Skill Scout scans multiple ecosystems and ranks items by popularity and recent activity. Search and filter, or ask for a best-of list when you’re exploring a new stack.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 mb-12">
+              <a href="/app" class="btn btn-primary px-8 py-3.5">Launch App</a>
+              <a href="#how" class="btn btn-secondary px-8 py-3.5">How it works</a>
+            </div>
+            <div class="grid grid-cols-3 gap-4">
+              <div class="p-4 rounded-2xl glass ring-soft">
+                <div class="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-1">Sources</div>
+                <div class="text-2xl font-bold font-[Outfit]">4+</div>
               </div>
-
-              <h1 class="mt-4 text-4xl sm:text-5xl font-semibold tracking-tight leading-[1.05]">
-                Find what to install next.
-              </h1>
-              <p class="mt-4 text-zinc-300 leading-relaxed text-[15px]">
-                Skill Scout scans multiple ecosystems and ranks items by popularity and recent activity.
-                Search and filter, or ask for a best-of list when you’re exploring a new stack.
-              </p>
-
-              <div class="mt-6 flex flex-col sm:flex-row gap-3">
-                <a href="/app" class="btn btn-primary w-full sm:w-auto pulse-ring">Launch app</a>
-                <a href="#how" class="btn btn-secondary w-full sm:w-auto">How it works</a>
+              <div class="p-4 rounded-2xl glass ring-soft">
+                <div class="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-1">Types</div>
+                <div class="text-2xl font-bold font-[Outfit]">7</div>
               </div>
-
-              <div class="mt-7 grid grid-cols-1 sm:grid-cols-3 gap-3">
-                <div class="kpi floaty">
-                  <div class="label">Sources</div>
-                  <div class="value">4+</div>
-                </div>
-                <div class="kpi floaty">
-                  <div class="label">Search types</div>
-                  <div class="value">7</div>
-                </div>
-                <div class="kpi floaty">
-                  <div class="label">Install hints</div>
-                  <div class="value">Built-in</div>
-                </div>
-              </div>
-
-              <div class="mt-7 grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-                <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-                  <div class="h3">Search + filters</div>
-                  <div class="muted mt-1">Find skills, MCP servers, plugins, connectors, APIs, and hooks.</div>
-                </div>
-                <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-                  <div class="h3">Ask (optional)</div>
-                  <div class="muted mt-1">Enable model reranking via NVIDIA/OpenAI/Ollama for smarter picks.</div>
-                </div>
+              <div class="p-4 rounded-2xl glass ring-soft">
+                <div class="text-xs text-zinc-500 font-bold uppercase tracking-widest mb-1">Hints</div>
+                <div class="text-2xl font-bold font-[Outfit]">Built-in</div>
               </div>
             </div>
           </div>
+          <div class="lg:col-span-5 reveal stagger-2">
+            <div class="glass ring-soft rounded-3xl p-2 overflow-hidden shadow-premium">
+              <img src="/static/workflow.png" alt="Skill Scout workflow" class="w-full rounded-2xl" />
+            </div>
+            <details class="mt-4 group">
+              <summary class="cursor-pointer text-sm text-zinc-500 hover:text-white transition-colors list-none flex items-center gap-2">
+                <span class="group-open:rotate-90 transition-transform">▸</span> See simple flowchart
+              </summary>
+              <div class="mt-4 glass ring-soft rounded-2xl p-2">
+                <img src="/static/flowchart.png" alt="Skill Scout flowchart" class="w-full rounded-xl" />
+              </div>
+            </details>
+          </div>
+        </section>
 
-          <div class="lg:col-span-6 fade-in reveal is-visible">
-            <div class="glass grad-stroke shadow-soft rounded-3xl overflow-hidden h-full shine">
-              <div class="p-5 sm:p-6 border-b border-zinc-800/70 flex items-start justify-between gap-3">
+        <!-- How it works -->
+        <section id="how" class="py-20 border-t border-zinc-900">
+          <div class="mb-16 reveal">
+            <h2 class="text-3xl font-bold font-[Outfit] mb-4 uppercase tracking-tight">How it works</h2>
+            <p class="text-zinc-500 max-w-2xl text-lg">Collect → Normalize → Deduplicate → Score → Serve. Refresh whenever you want the latest trends.</p>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+            <div class="reveal stagger-1 p-8 rounded-3xl glass ring-soft">
+              <div class="text-indigo-400 text-xs font-bold uppercase tracking-widest mb-4">Step 01</div>
+              <h3 class="text-xl font-bold mb-3 font-[Outfit]">Collect</h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">MCP Registry, GitHub SKILL.md ecosystem, NPM search, and local directory listings.</p>
+            </div>
+            <div class="reveal stagger-2 p-8 rounded-3xl glass ring-soft">
+              <div class="text-cyan-400 text-xs font-bold uppercase tracking-widest mb-4">Step 02</div>
+              <h3 class="text-xl font-bold mb-3 font-[Outfit]">Score</h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">Calculates popularity (stars/forks) and recency to generate a real-time impact score.</p>
+            </div>
+            <div class="reveal stagger-3 p-8 rounded-3xl glass ring-soft">
+              <div class="text-emerald-400 text-xs font-bold uppercase tracking-widest mb-4">Step 03</div>
+              <h3 class="text-xl font-bold mb-3 font-[Outfit]">Use</h3>
+              <p class="text-sm text-zinc-400 leading-relaxed">Search, filter by category, or ask the AI for a curated best-of list for your project.</p>
+            </div>
+          </div>
+
+          <div class="space-y-12 max-w-5xl mx-auto">
+            <!-- Detailed Workflow -->
+            <div class="reveal glass ring-soft rounded-[2.5rem] p-8 md:p-12 overflow-hidden">
+              <h4 class="text-xs font-extrabold text-zinc-500 mb-10 uppercase tracking-[0.2em] font-[Outfit]">Detailed Workflow</h4>
+              <div class="rounded-2xl overflow-hidden border border-zinc-800/50 bg-black/40">
+                <img src="/static/workflow_detailed.png" alt="Detailed Workflow" class="w-full h-auto block" />
+              </div>
+            </div>
+
+            <!-- What you actually do -->
+            <div class="reveal glass ring-soft rounded-[2.5rem] p-8 md:p-12">
+              <h4 class="text-xs font-extrabold text-zinc-500 mb-10 uppercase tracking-[0.2em] font-[Outfit]">What you actually do</h4>
+              <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
                 <div>
-                  <div class="text-sm text-zinc-200 font-semibold">Workflow overview</div>
-                  <div class="text-xs text-zinc-500 mt-1">Same diagram as the README.</div>
-                </div>
-                <a href="/app" class="text-xs text-indigo-300 hover:underline underline-offset-4">Open app →</a>
-              </div>
-              <div class="p-4 sm:p-6">
-                <img src="/static/workflow.png" alt="Skill Scout workflow" class="w-full rounded-2xl border border-zinc-800/70" />
-                <details class="mt-4">
-                  <summary class="cursor-pointer text-sm text-zinc-300 hover:text-white">See simple flowchart</summary>
-                  <div class="mt-3">
-                    <img src="/static/flowchart.png" alt="Skill Scout flowchart" class="w-full rounded-2xl border border-zinc-800/70" />
+                  <div class="space-y-6 mb-10">
+                    <div class="flex items-start gap-4">
+                      <span class="flex-shrink-0 w-6 h-6 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[10px] font-bold text-zinc-500">1</span>
+                      <p class="text-zinc-400 text-sm leading-relaxed">Click <span class="text-white font-bold">Refresh</span> to build/update the index.</p>
+                    </div>
+                    <div class="flex items-start gap-4">
+                      <span class="flex-shrink-0 w-6 h-6 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[10px] font-bold text-zinc-500">2</span>
+                      <p class="text-zinc-400 text-sm leading-relaxed">Search and filter by type (skill, mcp_server, plugin, connector, api, hook).</p>
+                    </div>
+                    <div class="flex items-start gap-4">
+                      <span class="flex-shrink-0 w-6 h-6 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[10px] font-bold text-zinc-500">3</span>
+                      <p class="text-zinc-400 text-sm leading-relaxed">Use <span class="text-white font-bold">Ask</span> for short recommended lists.</p>
+                    </div>
+                    <div class="flex items-start gap-4">
+                      <span class="flex-shrink-0 w-6 h-6 rounded-full bg-zinc-900 border border-zinc-800 flex items-center justify-center text-[10px] font-bold text-zinc-500">4</span>
+                      <p class="text-zinc-400 text-sm leading-relaxed">Open results and use <span class="text-white font-bold">Install hints</span>.</p>
+                    </div>
                   </div>
-                </details>
+
+                  <!-- Note Box -->
+                  <div class="p-6 rounded-2xl bg-zinc-950/50 border border-zinc-900 flex gap-4 items-start">
+                    <div class="flex-shrink-0 w-8 h-8 rounded-full bg-indigo-500/10 flex items-center justify-center text-indigo-400">
+                      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                    </div>
+                    <p class="text-xs text-zinc-500 leading-relaxed">
+                      On serverless (Vercel), storage may reset on cold starts — run Refresh again to repopulate results.
+                    </p>
+                  </div>
+                </div>
+
+                <div class="rounded-2xl overflow-hidden border border-zinc-800/50 shadow-2xl">
+                  <img src="/static/ui_mock.png" alt="App UI Mock" class="w-full h-auto block" />
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        <section id="how" class="mt-10 glass grad-stroke shadow-soft rounded-3xl p-6 sm:p-8 reveal">
-          <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-4">
-            <div>
-              <div class="h2">How it works</div>
-              <div class="muted mt-2 max-w-2xl text-sm">
-                Collect → clean → score → index → search/ask. Refresh whenever you want the latest trends.
+        <!-- LLM Settings -->
+        <section id="llm" class="py-20 border-t border-zinc-900">
+           <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+              <div class="lg:col-span-7 reveal">
+                <h2 class="text-3xl font-bold font-[Outfit] mb-4">LLM providers (optional)</h2>
+                <p class="text-zinc-500 mb-8 max-w-2xl">“Ask” works without a model (local ranking), but you’ll get better results when you connect a provider.</p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="p-5 rounded-2xl glass ring-soft hover:border-indigo-500/30 transition-all">
+                    <h3 class="font-bold mb-2">NVIDIA</h3>
+                    <p class="text-xs text-zinc-500 leading-relaxed">OpenAI-compatible gateway. Set <code class="text-zinc-300">OPENAI_BASE_URL</code> + <code class="text-zinc-300">OPENAI_MODEL</code>.</p>
+                  </div>
+                  <div class="p-5 rounded-2xl glass ring-soft hover:border-indigo-500/30 transition-all">
+                    <h3 class="font-bold mb-2">OpenAI</h3>
+                    <p class="text-xs text-zinc-500 leading-relaxed">Use default API. Set <code class="text-zinc-300">OPENAI_API_KEY</code>.</p>
+                  </div>
+                  <div class="p-5 rounded-2xl glass ring-soft hover:border-indigo-500/30 transition-all">
+                    <h3 class="font-bold mb-2">Ollama</h3>
+                    <p class="text-xs text-zinc-500 leading-relaxed">Local models. Set <code class="text-zinc-300">OLLAMA_HOST</code> + <code class="text-zinc-300">OLLAMA_MODEL</code>.</p>
+                  </div>
+                </div>
               </div>
-            </div>
-            <div class="flex gap-2">
-              <a class="btn btn-ghost py-2.5 px-4 rounded-2xl" href="/app">Open app</a>
-              <a class="btn btn-secondary py-2.5 px-4 rounded-2xl" href="https://github.com/aekanshkhandelwal/skill-scout" target="_blank" rel="noreferrer">Readme</a>
-            </div>
-          </div>
-
-          <div class="mt-6 grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
-            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-              <div class="h3">Collect</div>
-              <div class="muted mt-1">MCP Registry, GitHub SKILL.md ecosystem, NPM search, directory listings.</div>
-            </div>
-            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-              <div class="h3">Score</div>
-              <div class="muted mt-1">Popularity (stars/forks) + recency (last update) + type weighting.</div>
-            </div>
-            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-              <div class="h3">Use</div>
-              <div class="muted mt-1">Search and filter, ask for top picks, then follow install hints.</div>
-            </div>
-          </div>
-
-          <div class="mt-7 grid grid-cols-1 lg:grid-cols-2 gap-4">
-            <div class="glass2 ring-soft2 rounded-2xl p-4 sm:p-5 floaty">
-              <div class="text-sm font-semibold text-zinc-200">Detailed workflow diagram</div>
-              <div class="text-xs text-zinc-500 mt-1">A step-by-step view of the pipeline (collect → normalize → dedupe → score → serve).</div>
-              <img src="/static/workflow_detailed.png" alt="Skill Scout workflow detailed" class="mt-4 w-full rounded-2xl border border-zinc-800/70" />
-            </div>
-            <div class="glass2 ring-soft2 rounded-2xl p-4 sm:p-5 floaty">
-              <div class="text-sm font-semibold text-zinc-200">What you actually do</div>
-              <ol class="mt-3 space-y-2 text-sm text-zinc-300 list-decimal list-inside">
-                <li>Click <span class="text-zinc-200 font-semibold">Refresh</span> to build/update the index.</li>
-                <li>Search and filter by type (skill, mcp_server, plugin, connector, api, hook).</li>
-                <li>Use <span class="text-zinc-200 font-semibold">Ask</span> for short recommended lists.</li>
-                <li>Open results and use <span class="text-zinc-200 font-semibold">Install hints</span>.</li>
-              </ol>
-              <div class="mt-4 text-xs text-zinc-500">
-                On serverless (Vercel), storage may reset on cold starts — run Refresh again to repopulate results.
+              <div class="lg:col-span-5 reveal stagger-2">
+                <h2 class="text-3xl font-bold font-[Outfit] mb-4">Deploy</h2>
+                <p class="text-zinc-500 mb-8">Works locally and on serverless hosts.</p>
+                <div class="space-y-4">
+                  <div class="p-4 rounded-2xl glass ring-soft">
+                    <h3 class="text-sm font-bold mb-1">Vercel</h3>
+                    <p class="text-xs text-zinc-500">On cold starts, call <code class="text-zinc-300">/api/refresh</code> (or use the in-app Refresh button).</p>
+                  </div>
+                  <div class="p-4 rounded-2xl glass ring-soft">
+                    <h3 class="text-sm font-bold mb-1">Render / Fly</h3>
+                    <p class="text-xs text-zinc-500">Easier persistence. Keep SQLite on disk or switch to Postgres.</p>
+                  </div>
+                </div>
               </div>
-              <img src="/static/ui_mock.png" alt="Skill Scout app UI mock" class="mt-4 w-full rounded-2xl border border-zinc-800/70" />
+           </div>
+        </section>
+
+        <!-- FAQ -->
+        <section class="py-20 border-t border-zinc-900 reveal">
+          <h2 class="text-3xl font-bold font-[Outfit] mb-8">FAQ</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="p-6 rounded-2xl glass ring-soft">
+              <h3 class="font-bold mb-2">Why do I sometimes see 0 results?</h3>
+              <p class="text-sm text-zinc-500">On serverless, storage resets. Click <span class="text-white font-medium">Refresh</span> to rebuild the index.</p>
+            </div>
+            <div class="p-6 rounded-2xl glass ring-soft">
+              <h3 class="font-bold mb-2">Does it install things automatically?</h3>
+              <p class="text-sm text-zinc-500">No—Skill Scout shows install hints and links. You stay in control.</p>
+            </div>
+            <div class="p-6 rounded-2xl glass ring-soft">
+              <h3 class="font-bold mb-2">Is the Antigravity directory verified?</h3>
+              <p class="text-sm text-zinc-500">It’s treated as discovery only. Validate before installing.</p>
+            </div>
+            <div class="p-6 rounded-2xl glass ring-soft">
+              <h3 class="font-bold mb-2">How do I keep API keys safe?</h3>
+              <p class="text-sm text-zinc-500">Use environment variables (Vercel settings or local <code class="text-zinc-300">.env</code>). Never commit secrets.</p>
             </div>
           </div>
         </section>
-
-        <section class="mt-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
-          <div class="lg:col-span-7 glass grad-stroke shadow-soft rounded-3xl p-6 sm:p-8 reveal">
-            <div class="h2">LLM providers (optional)</div>
-            <div class="muted mt-2 text-sm max-w-2xl">
-              “Ask” works without a model (local ranking), but you’ll get better results when you connect a provider.
-            </div>
-
-            <div class="mt-6 grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm">
-              <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-                <div class="h3">NVIDIA</div>
-                <div class="muted mt-1">OpenAI-compatible gateway. Set <code class="text-zinc-200">OPENAI_BASE_URL</code> + <code class="text-zinc-200">OPENAI_MODEL</code>.</div>
-              </div>
-              <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-                <div class="h3">OpenAI</div>
-                <div class="muted mt-1">Use default API. Set <code class="text-zinc-200">OPENAI_API_KEY</code>.</div>
-              </div>
-              <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-                <div class="h3">Ollama</div>
-                <div class="muted mt-1">Local models. Set <code class="text-zinc-200">OLLAMA_HOST</code> + <code class="text-zinc-200">OLLAMA_MODEL</code>.</div>
-              </div>
-            </div>
-          </div>
-
-          <div class="lg:col-span-5 glass grad-stroke shadow-soft rounded-3xl p-6 sm:p-8 reveal">
-            <div class="h2">Deploy</div>
-            <div class="muted mt-2 text-sm">
-              Works locally and on serverless hosts. For best reliability, use a hosted DB later.
-            </div>
-            <div class="mt-5 space-y-3 text-sm">
-              <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-                <div class="h3">Vercel</div>
-                <div class="muted mt-1">On cold starts, call <code class="text-zinc-200">/api/refresh</code> (or use the in-app Refresh button).</div>
-              </div>
-              <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-                <div class="h3">Render / Fly</div>
-                <div class="muted mt-1">Easier persistence. Keep SQLite on disk or switch to Postgres.</div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="mt-6 glass grad-stroke shadow-soft rounded-3xl p-6 sm:p-8 reveal">
-          <div class="h2">FAQ</div>
-          <div class="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
-            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-              <div class="h3">Why do I sometimes see 0 results?</div>
-              <div class="muted mt-1">On serverless, storage resets. Click <span class="text-zinc-200 font-medium">Refresh</span> to rebuild the index.</div>
-            </div>
-            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-              <div class="h3">Does it install things automatically?</div>
-              <div class="muted mt-1">No—Skill Scout shows install hints and links. You stay in control.</div>
-            </div>
-            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-              <div class="h3">Is the Antigravity directory verified?</div>
-              <div class="muted mt-1">It’s treated as discovery only. Validate before installing.</div>
-            </div>
-            <div class="glass2 ring-soft2 rounded-2xl p-4 floaty">
-              <div class="h3">How do I keep API keys safe?</div>
-              <div class="muted mt-1">Use environment variables (Vercel settings or local <code class="text-zinc-200">.env</code>). Never commit secrets.</div>
-            </div>
-          </div>
-        </section>
-
       </main>
 
-      <footer class="mt-10 glass ring-soft shadow-soft2 rounded-3xl p-5 sm:p-6 text-xs text-zinc-500 reveal">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div class="muted">Built for fast discovery. Store is local by default.</div>
-          <div class="flex flex-wrap items-center gap-2">
-            <span class="chip">Local: <code class="text-zinc-200">python -m skill_scout.cli refresh</code></span>
-            <span class="chip">Run: <code class="text-zinc-200">python -m skill_scout.cli serve</code></span>
+      <!-- Footer -->
+      <footer class="py-12 border-t border-zinc-900 reveal">
+        <div class="flex flex-col md:flex-row justify-between items-center gap-8">
+          <div>
+             <div class="text-sm text-zinc-400 mb-2">Built for fast discovery. Store is local by default.</div>
+             <div class="flex flex-wrap gap-3">
+               <span class="chip">Local: <code class="text-zinc-200">python -m skill_scout.cli refresh</code></span>
+               <span class="chip">Run: <code class="text-zinc-200">python -m skill_scout.cli serve</code></span>
+             </div>
+          </div>
+          <div class="flex items-center gap-6">
+             <a href="https://github.com/aekanshkhandelwal/skill-scout" class="nav-link">GitHub</a>
+             <a href="/app" class="btn btn-secondary !rounded-full py-2 px-5 text-sm">Launch App</a>
           </div>
         </div>
       </footer>
@@ -241,34 +251,24 @@
 
     <script>
       (function () {
-        // Smooth anchor scrolling
-        document.querySelectorAll('a[href^=\"#\"]').forEach(a => {
-          a.addEventListener('click', (e) => {
-            const id = a.getAttribute('href').slice(1);
-            const el = document.getElementById(id);
-            if (!el) return;
-            e.preventDefault();
-            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            history.replaceState(null, '', '#' + id);
-          });
-        });
-
-        const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        if (prefersReduced) return;
-
-        const els = Array.from(document.querySelectorAll('.reveal'));
-        const io = new IntersectionObserver((entries) => {
-          for (const ent of entries) {
-            if (ent.isIntersecting) {
-              ent.target.classList.add('is-visible');
-              io.unobserve(ent.target);
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
             }
-          }
-        }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
-        els.forEach((el, idx) => {
-          // Subtle stagger
-          el.style.transitionDelay = `${Math.min(idx * 60, 240)}ms`;
-          io.observe(el);
+          });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+
+        // Smooth scroll for anchors
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+          anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+              behavior: 'smooth'
+            });
+          });
         });
       })();
     </script>

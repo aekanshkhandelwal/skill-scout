@@ -7,6 +7,7 @@ from typing import Any
 from dateutil.parser import isoparse
 
 from skill_scout.http import build_http_client
+from skill_scout.publishers import normalize_company_name
 from skill_scout.types import DiscoveredItem
 
 
@@ -43,6 +44,14 @@ def _repo_to_item(repo: dict[str, Any], reason_tag: str) -> DiscoveredItem:
     elif "api" in topics_l or "sdk" in topics_l:
         inferred_type = "api"
 
+    owner = (full_name.split("/", 1)[0] if "/" in full_name else None)
+    owner_l = owner.lower() if owner else None
+    publisher = normalize_company_name(owner_l or "") or owner_l
+
+    tags.extend([f"publisher:{owner_l}"] if owner_l else [])
+    if normalize_company_name(owner_l or ""):
+        tags.append(f"company:{normalize_company_name(owner_l)}")
+
     return DiscoveredItem(
         id=f"gh:{full_name}",
         type=inferred_type,  # type: ignore[arg-type]
@@ -51,6 +60,8 @@ def _repo_to_item(repo: dict[str, Any], reason_tag: str) -> DiscoveredItem:
         source="github",
         url=html_url,
         tags=tags,
+        publisher=publisher,
+        publisher_type="github_owner" if owner_l else None,
         stars=repo.get("stargazers_count"),
         forks=repo.get("forks_count"),
         watchers=repo.get("watchers_count"),

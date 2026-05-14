@@ -33,11 +33,11 @@ def _relevance(prompt: str, item: dict[str, Any]) -> float:
 
 async def ask(db_path: str, prompt: str, types: list[str] | None, k: int = 10) -> dict[str, Any]:
     # Stage 1: local lexical search -> candidates
-    candidates = await query_items(db_path=db_path, q=prompt, types=types, limit=80, offset=0)
+    candidates = await query_items(db_path=db_path, q=prompt, types=types, limit=80, offset=0, sort="score")
 
     if not candidates:
         # Fallback: broaden search and rank by relevance+score.
-        broader = await query_items(db_path=db_path, q=None, types=types, limit=200, offset=0)
+        broader = await query_items(db_path=db_path, q=None, types=types, limit=200, offset=0, sort="score")
         broader.sort(key=lambda it: (_relevance(prompt, it), it.get("score") or 0.0), reverse=True)
         candidates = broader[:80]
 

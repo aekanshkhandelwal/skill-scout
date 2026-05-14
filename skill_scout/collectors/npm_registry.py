@@ -6,6 +6,7 @@ from typing import Any
 from dateutil.parser import isoparse
 
 from skill_scout.http import build_http_client
+from skill_scout.publishers import github_owner_from_url, normalize_company_name
 from skill_scout.types import DiscoveredItem
 
 
@@ -49,8 +50,14 @@ async def collect_npm_mcp(limit_total: int = 200) -> list[DiscoveredItem]:
                 url = links.get("repository") or links.get("homepage") or links.get("npm") or f"https://www.npmjs.com/package/{name}"
                 keywords = pkg.get("keywords") or []
                 date = _safe_dt(pkg.get("date"))
+                owner = github_owner_from_url(str(links.get("repository") or "")) or github_owner_from_url(str(url))
+                publisher = normalize_company_name(owner or "") or owner
 
                 tags = ["npm", "mcp", *[str(k) for k in keywords[:12]]]
+                if owner:
+                    tags.append(f"publisher:{owner}")
+                if publisher and normalize_company_name(publisher):
+                    tags.append(f"company:{publisher}")
                 item = DiscoveredItem(
                     id=f"npm:{name}",
                     type="mcp_server" if "mcp" in " ".join([q, desc, " ".join(map(str, keywords))]).lower() else "other",
@@ -62,8 +69,9 @@ async def collect_npm_mcp(limit_total: int = 200) -> list[DiscoveredItem]:
                     last_pushed_at=date,
                     mcp_name=name if "mcp" in name.lower() else None,
                     mcp_version=str(version) if version else None,
+                    publisher=publisher,
+                    publisher_type="github_owner" if owner else None,
                 )
                 items[item.id] = item
 
     return list(items.values())[:limit_total]
-

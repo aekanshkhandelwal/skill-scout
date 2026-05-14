@@ -14,7 +14,7 @@ from skill_scout.collectors.claudskills_directory import collect_claudskills_dir
 from skill_scout.collectors.github_skills import collect_github_skill_repos
 from skill_scout.collectors.mcp_registry import collect_mcp_registry
 from skill_scout.collectors.npm_registry import collect_npm_mcp
-from skill_scout.db import get_item, init_db, query_items, upsert_many
+from skill_scout.db import count_items, get_item, init_db, query_items, upsert_many
 from skill_scout.rank import compute_scores
 from skill_scout.agent import ask
 from skill_scout.install import install_hints
@@ -108,11 +108,15 @@ def create_app(db_path: str) -> FastAPI:
     async def api_items(
         q: str | None = Query(default=None),
         types: list[str] | None = Query(default=None),
+        sort: str = Query(default="score"),
         limit: int = Query(default=50, ge=1, le=200),
         offset: int = Query(default=0, ge=0),
     ) -> JSONResponse:
-        rows = await query_items(db_path=db_path, q=q, types=types, limit=limit, offset=offset)
-        return JSONResponse({"items": rows, "limit": limit, "offset": offset})
+        if sort not in ("score", "stars", "recent"):
+            sort = "score"
+        total = await count_items(db_path=db_path, q=q, types=types)
+        rows = await query_items(db_path=db_path, q=q, types=types, limit=limit, offset=offset, sort=sort)
+        return JSONResponse({"items": rows, "limit": limit, "offset": offset, "total": total, "sort": sort})
 
     @app.get("/api/items/{item_id}", response_class=JSONResponse)
     async def api_item(item_id: str) -> JSONResponse:

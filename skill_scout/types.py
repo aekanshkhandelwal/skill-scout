@@ -18,6 +18,10 @@ class DiscoveredItem:
     url: str
     tags: list[str] = field(default_factory=list)
 
+    # Publisher attribution (best-effort)
+    publisher: str | None = None  # e.g. "openai", "anthropic"
+    publisher_type: str | None = None  # e.g. "github_owner", "inferred"
+
     # Optional metrics (used for “trending” scoring)
     stars: int | None = None
     forks: int | None = None
@@ -34,4 +38,3 @@ class DiscoveredItem:
     # Computed
     score: float | None = None
     score_breakdown_json: dict[str, Any] | None = None
-
