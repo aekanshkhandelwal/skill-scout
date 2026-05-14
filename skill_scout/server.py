@@ -20,7 +20,11 @@ from skill_scout.agent import ask
 from skill_scout.install import install_hints
 
 
+from dotenv import load_dotenv
+import asyncio
+
 def create_app(db_path: str) -> FastAPI:
+    load_dotenv()
     app = FastAPI(title="Skill Scout", version="0.1.0")
 
     base_dir = Path(__file__).resolve().parent
@@ -36,58 +40,45 @@ def create_app(db_path: str) -> FastAPI:
     async def _refresh_index() -> dict:
         async def _try(label: str, fn):
             try:
-                return await fn()
+                res = await fn()
+                return {"label": label, "count": len(res) if isinstance(res, list) else 0, "items": res if isinstance(res, list) else [], "error": None}
             except Exception as e:
                 return {"label": label, "error": str(e), "count": 0, "items": []}
 
-        results = []
+        # Run all collectors in parallel to avoid Vercel timeouts (10s limit)
+        tasks = [
+            _try("mcp_registry", collect_mcp_registry),
+            _try("antigravity_directory", collect_antigravity_mcp_directory),
+            _try("github", collect_github_skill_repos),
+            _try("npm", collect_npm_mcp),
+            _try("agentskills_directory", collect_agentskills_directory),
+            _try("claudskills_directory", collect_claudskills_directory),
+        ]
+        
+        collector_results = await asyncio.gather(*tasks)
+        
+        all_items = []
+        status_report = []
+        for r in collector_results:
+            all_items.extend(r["items"])
+            status_report.append({"label": r["label"], "count": r["count"], "error": r["error"]})
 
-        r1 = await _try("mcp_registry", collect_mcp_registry)
-        if isinstance(r1, list):
-            results.append({"label": "mcp_registry", "count": len(r1), "error": None})
-            items = r1
-        else:
-            results.append(r1)
-            items = []
-
-        r2 = await _try("antigravity_directory", collect_antigravity_mcp_directory)
-        if isinstance(r2, list):
-            results.append({"label": "antigravity_directory", "count": len(r2), "error": None})
-            items.extend(r2)
-        else:
-            results.append(r2)
-
-        r3 = await _try("github", collect_github_skill_repos)
-        if isinstance(r3, list):
-            results.append({"label": "github", "count": len(r3), "error": None})
-            items.extend(r3)
-        else:
-            results.append(r3)
-
-        r4 = await _try("npm", collect_npm_mcp)
-        if isinstance(r4, list):
-            results.append({"label": "npm", "count": len(r4), "error": None})
-            items.extend(r4)
-        else:
-            results.append(r4)
-
-        r5 = await _try("agentskills_directory", collect_agentskills_directory)
-        if isinstance(r5, list):
-            results.append({"label": "agentskills_directory", "count": len(r5), "error": None})
-            items.extend(r5)
-        else:
-            results.append(r5)
-
-        r6 = await _try("claudskills_directory", collect_claudskills_directory)
-        if isinstance(r6, list):
-            results.append({"label": "claudskills_directory", "count": len(r6), "error": None})
-            items.extend(r6)
-        else:
-            results.append(r6)
-
-        scored = compute_scores(items)
+        scored = compute_scores(all_items)
         await upsert_many(db_path, scored)
-        return {"ok": True, "total_indexed": len(scored), "collectors": results}
+        
+        # Check for missing keys to warn user
+        warnings = []
+        if not os.getenv("GITHUB_TOKEN"):
+            warnings.append("GITHUB_TOKEN missing: GitHub search may be rate-limited.")
+        if not os.getenv("OPENAI_API_KEY"):
+            warnings.append("OPENAI_API_KEY missing: Semantic ranking disabled.")
+
+        return {
+            "ok": True, 
+            "total_indexed": len(scored), 
+            "collectors": status_report,
+            "warnings": warnings
+        }
 
     @app.get("/", response_class=HTMLResponse)
     async def landing(request: Request) -> HTMLResponse:
